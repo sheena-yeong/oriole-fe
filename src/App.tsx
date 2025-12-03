@@ -1,5 +1,6 @@
 import oriole_logo from './assets/oriole_logo_v7.png';
-import Login from './components/User/Login';
+import SignIn from './components/User/SignIn';
+import SignUp from './components/User/SignUp';
 import HomeNavBar from './components/HomePage/HomeNavBar.tsx';
 
 function App() {
@@ -14,7 +15,10 @@ function App() {
 
           <HomeNavBar />
 
-          <Login />
+          <div className="flex gap-2">
+            <SignIn />
+            <SignUp />
+          </div>
         </div>
       </div>
     </>
