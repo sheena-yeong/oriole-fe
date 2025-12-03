@@ -18,7 +18,16 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) => {
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
     const result = await signUp({ firstName, lastName, email, password });
     if (result.success) {
       navigate('/');
@@ -28,8 +37,19 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
     }
   };
 
+  const handleOpenChange = (open: boolean) => {
+    setOpenDialog(open);
+    if (!open) {
+      setError('');
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
+    }
+  };
+
   return (
-    <DialogPrimitive.Root open={openDialog} onOpenChange={setOpenDialog}>
+    <DialogPrimitive.Root open={openDialog} onOpenChange={handleOpenChange}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60" />
 
@@ -62,7 +82,7 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmit();
+              handleSubmit(firstName, lastName, email, password);
             }}
             className="space-y-3"
           >
