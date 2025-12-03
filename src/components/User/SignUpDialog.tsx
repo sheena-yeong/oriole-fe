@@ -76,7 +76,7 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
           </DialogPrimitive.Title>
 
           <p className="text-sm text-neutral-600 dark:text-neutral-300 mb-5">
-            Sign up to get started and access all features.
+            Sign up to get started.
           </p>
 
           <form

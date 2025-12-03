@@ -20,7 +20,7 @@ function SignInDialog({ openDialog, setOpenDialog }: DialogProps) {
     const result = await signIn(email, password);
     console.log(result)
     if (result.success) {
-      navigate('/');
+      navigate('/cryptocurrencies');
     } else {
       setError(result.error!);
     }

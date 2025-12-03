@@ -10,7 +10,7 @@ function SignUp() {
         className="
         px-4 py-2 
         border border-yellow-500/40 
-        rounded-lg 
+        rounded-sm 
         text-sm
         hover:bg-yellow-500/10
         transition
