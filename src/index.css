@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Root styles (you already have this) */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -7,10 +8,51 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #000000;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Dialog Animations --- */
+
+/* Overlay fade */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Content fade + slight scale */
+@keyframes dialogIn {
+  0% { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes dialogOut {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards; /* slower 0.5s */
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-in forwards;
+}
+
+.dialog-in {
+  animation: dialogIn 0.5s ease-out forwards;
+}
+
+.dialog-out {
+  animation: dialogOut 0.5s ease-in forwards;
 }
