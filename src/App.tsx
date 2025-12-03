@@ -1,27 +1,55 @@
+import { Routes, Route, useLocation } from 'react-router-dom';
+import Cryptocurrencies from './pages/Cryptocurrencies.tsx';
 import oriole_logo from './assets/oriole_logo_v7.png';
 import SignIn from './components/User/SignIn';
 import SignUp from './components/User/SignUp';
 import HomeNavBar from './components/HomePage/HomeNavBar.tsx';
+import prism_bg from './assets/prism_bg.jpg';
 
 function App() {
+  const location = useLocation();
+  const showHero = location.pathname !== '/cryptocurrencies';
+
   return (
-    <>
-      <div className="min-h-screen bg-black relative pt-12">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(254,89,20,0.35),transparent_60%)]" />
+    <div className="relative w-screen h-screen overflow-hidden bg-black">
+      {/* Background only on non-crypto pages */}
+      {showHero && (
+        <>
+          <img
+            src={prism_bg}
+            className="absolute inset-0 w-full h-full object-cover opacity-25 pointer-events-none z-0"
+            alt="background prism"
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(254,89,20,0.35),transparent_60%)] pointer-events-none z-10" />
+        </>
+      )}
 
-        {/* Header */}
-        <div className="flex items-center justify-between px-5">
-          <img src={oriole_logo} className="h-16 pl-3" />
-
-          <HomeNavBar />
-
-          <div className="flex gap-2">
-            <SignIn />
-            <SignUp />
-          </div>
+      {/* Header always */}
+      <header className="flex items-center justify-between px-5 py-4 relative z-20">
+        <img src={oriole_logo} className="h-16 pl-3" alt="logo" />
+        <HomeNavBar />
+        <div className="flex gap-2">
+          <SignIn />
+          <SignUp />
         </div>
-      </div>
-    </>
+      </header>
+
+      {/* Hero only on non-crypto pages */}
+      {showHero && (
+        <main className="relative z-20 flex flex-col justify-end items-start h-screen px-10 pb-50">
+          <h3 className="text-5xl font-poppins text-white">
+            Invest. Trade. Grow.
+          </h3>
+        </main>
+      )}
+
+      {/* Routes */}
+      <main className="relative z-20 h-full w-full">
+        <Routes>
+          <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 

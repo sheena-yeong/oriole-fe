@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 /* Root styles (you already have this) */
@@ -14,6 +15,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
 }
 
 /* --- Dialog Animations --- */
