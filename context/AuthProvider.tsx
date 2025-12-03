@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (err) {
       let errorMessage = 'An unexpected error occurred';
       if (axios.isAxiosError(err)) {
-        errorMessage = err.response?.data?.message
+        errorMessage = err.response?.data?.error
       } else if (err instanceof Error) {
         errorMessage = err.message;
       }
