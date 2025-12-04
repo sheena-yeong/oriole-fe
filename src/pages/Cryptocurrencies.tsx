@@ -29,7 +29,7 @@ function Cryptocurrencies() {
   return (
     <>
     <h3 className="font-poppins pl-6 pt-5 font-semibold text-2xl">Cryptocurrencies</h3>
-    <div className="p-5 overflow-x-auto">
+    <div className="p-5 overflow-x-hidden sm:overflow-x-auto">
       <table className="min-w-full divide-y divide-neutral-700 rounded-lg bg-neutral-900 text-white">
         <thead className="bg-neutral-800">
           <tr>
