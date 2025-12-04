@@ -1,13 +1,16 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import ProtectedRoute from '../Routes/ProtectedRoute.tsx';
 import PublicPage from './pages/PublicPage.tsx';
+import Portfolio from './pages/Portfolio.tsx';
+import Settings from './pages/Settings.tsx'
 import Cryptocurrencies from './pages/Cryptocurrencies.tsx';
 import oriole_logo from './assets/oriole_logo_v7.png';
-import UserNavBar from './components/NavBars/UserNavBar.tsx';
-import Settings from './pages/Settings.tsx';
+import NavBar from './components/NavBars/NavBar.tsx';
+import SettingsDropDown from './components/NavBars/SettingsDropDown.tsx';
 
 function App() {
   const location = useLocation();
-  const publicPage = location.pathname !== '/cryptocurrencies';
+  const publicPage = location.pathname == '/';
 
   return (
     <div className="relative w-full h-full bg-black">
@@ -20,11 +23,11 @@ function App() {
             </div>
 
             <div className="mx-auto">
-              <UserNavBar />
+              <NavBar />
             </div>
 
             <div className="absolute right-2">
-              <Settings />
+              <SettingsDropDown />
             </div>
           </header>
         </>
@@ -36,7 +39,13 @@ function App() {
       {/* Routes */}
       <main className="relative z-20 h-full w-full">
         <Routes>
-          <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/settings" element={<Settings />} />
+
+          </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
     </div>
