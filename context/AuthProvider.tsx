@@ -52,11 +52,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
-          return { success: false, error: 'Username or password is incorrect' };
+          return { success: false, error: 'Username or password is incorrect.' };
         }
         return { success: false, error: error.message };
       }
-      return { success: false, error: 'An unexpected error occurred' };
+      return { success: false, error: 'An unexpected error occurred.' };
     }
   }
 
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const { data } = await axios.post(`${BASE_URL}/auth/sign-up`, userData);
       return { success: true, message: data.message };
     } catch (err) {
-      let errorMessage = 'An unexpected error occurred';
+      let errorMessage = 'An unexpected error occurred.';
       if (axios.isAxiosError(err)) {
         errorMessage = err.response?.data?.error
       } else if (err instanceof Error) {
