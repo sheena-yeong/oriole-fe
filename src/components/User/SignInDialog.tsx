@@ -15,11 +15,20 @@ function SignInDialog({ openDialog, setOpenDialog }: DialogProps) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = async (email: string, password: string): Promise<void> => {
-    console.log(email, password)
+  const handleSubmit = async (
+    email: string,
+    password: string
+  ): Promise<void> => {
     const result = await signIn(email, password);
-    console.log(result)
+    console.log(result);
+    console.log(result.error);
+
+    if (result.success === false) {
+      setError(result.error!);
+    }
     if (result.success) {
+      setOpenDialog(false);
+
       navigate('/cryptocurrencies');
     } else {
       setError(result.error!);
@@ -61,7 +70,6 @@ function SignInDialog({ openDialog, setOpenDialog }: DialogProps) {
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit(email, password);
-              setOpenDialog(false);
             }}
             className="space-y-3"
           >
@@ -91,7 +99,9 @@ function SignInDialog({ openDialog, setOpenDialog }: DialogProps) {
 
             <div className="mt-4 flex justify-end gap-2">
               <DialogPrimitive.Close asChild></DialogPrimitive.Close>
-
+              {error && (
+                <p className="text-red-600">{error}</p>
+              )}
               <button
                 type="submit"
                 className="rounded-md bg-[#fe5914] px-4 py-2 text-sm font-medium text-white 
@@ -101,7 +111,6 @@ function SignInDialog({ openDialog, setOpenDialog }: DialogProps) {
               </button>
             </div>
           </form>
-          {error && <p>{error}</p>}
         </DialogPrimitive.Content>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
