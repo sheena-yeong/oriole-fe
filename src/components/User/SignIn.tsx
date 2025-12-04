@@ -14,7 +14,7 @@ function SignIn() {
         text-sm text-yellow-100
         hover:bg-yellow-500/10
         transition
-        bg-[#fe5914]
+        bg-black
         font-semibold
       "
         onClick={() => setOpenDialog(true)}

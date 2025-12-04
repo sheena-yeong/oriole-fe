@@ -14,7 +14,7 @@ function SignUp() {
         text-sm
         hover:bg-yellow-500/10
         transition
-        bg-[#5c5c5c]
+        bg-[#fe5914]
         font-semibold
         text-white
       "
