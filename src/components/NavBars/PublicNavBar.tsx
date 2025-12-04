@@ -1,6 +1,6 @@
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
-const StyledNavigationMenu: React.FC = () => {
+const PublicNavBar: React.FC = () => {
   return (
 
       <NavigationMenu.Root className="relative z-10">
@@ -36,4 +36,4 @@ const StyledNavigationMenu: React.FC = () => {
   );
 };
 
-export default StyledNavigationMenu;
+export default PublicNavBar;
