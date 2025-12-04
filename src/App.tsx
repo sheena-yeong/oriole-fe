@@ -1,10 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { IoMdSettings } from 'react-icons/io';
 import PublicPage from './pages/PublicPage.tsx';
-
 import Cryptocurrencies from './pages/Cryptocurrencies.tsx';
 import oriole_logo from './assets/oriole_logo_v7.png';
-
 import UserNavBar from './components/NavBars/UserNavBar.tsx';
 
 function App() {
@@ -19,9 +16,6 @@ function App() {
           <header className="flex items-center justify-between px-2 py-4 relative z-20">
             <img src={oriole_logo} className="h-16" alt="logo" />
             <UserNavBar />
-            <div className="flex gap-2 pr-5">
-              <IoMdSettings size={28} />
-            </div>
           </header>
         </>
       )}
