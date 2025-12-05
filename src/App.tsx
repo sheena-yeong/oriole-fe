@@ -10,17 +10,20 @@ import SettingsDropDown from './components/NavBars/SettingsDropDown.tsx';
 import { useState, useEffect } from 'react';
 import { getCoins } from './services/crypto';
 import type { Coin } from '../types/coins';
+import { useAuth } from '../hooks/useAuth.ts';
 
 function App() {
   const location = useLocation();
   const publicPage = location.pathname == '/';
-
+  const { isAuthenticated, tokens } = useAuth();
   const [coins, setCoins] = useState<Coin[]>([]);
 
   useEffect(() => {
     const fetchCoins = async () => {
+      if (!tokens.access) return;
+
       try {
-        const data = await getCoins();
+        const data = await getCoins(tokens.access);
         setCoins(data);
         console.log('Fetched coins', data);
       } catch (err) {
@@ -28,7 +31,7 @@ function App() {
       }
     };
     fetchCoins();
-  }, []);
+  }, [isAuthenticated, tokens.access]);
 
   return (
     <div className="relative w-full h-full bg-black">
