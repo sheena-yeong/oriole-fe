@@ -24,9 +24,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       try {
         const payload = JSON.parse(atob(stored.split('.')[1]));
         setUser({
-          id: payload._id,
+          id: payload.id,
           email: payload.email,
-          role: payload.role,
         });
       } catch {
         localStorage.removeItem('access_token');
@@ -46,7 +45,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       localStorage.setItem('access_token', data.access);
 
       const payload = JSON.parse(atob(data.access.split('.')[1]));
-      setUser({ id: payload._id, email: payload.email, role: payload.role });
+      setUser({ id: payload._id, email: payload.email });
 
       return { success: true };
     } catch (error) {
