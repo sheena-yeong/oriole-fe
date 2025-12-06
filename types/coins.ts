@@ -6,3 +6,5 @@ export interface Coin {
   marketCap: string;
   change24h: string;
 }
+
+export type watchListCoin = Omit<Coin, 'rank' | 'marketCap' | 'change24h' | 'price'>;
