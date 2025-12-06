@@ -24,18 +24,18 @@ const NavBar: React.FC = () => {
           </NavigationMenu.Link>
         </NavigationMenu.Item>
 
-        {/* Portfolio */}
+        {/* watchlist */}
         <NavigationMenu.Item>
           <NavigationMenu.Link asChild>
             <Link
-              to="/portfolio"
+              to="/watchlist"
               className={`text-lg font-semibold transition-colors duration-200 cursor-pointer ${
-                pathname === '/portfolio'
+                pathname === '/watchlist'
                   ? 'text-orange-400'
                   : 'text-white hover:text-white/80'
               }`}
             >
-              Portfolio
+              WatchList
             </Link>
           </NavigationMenu.Link>
         </NavigationMenu.Item>
