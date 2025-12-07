@@ -3,18 +3,20 @@ import { useAuth } from '../../../hooks/useAuth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addWatchListCoins } from '../../services/crypto';
-import type { Coin } from '../../../types/coins';
+import type { Coin, CoinSymbolOnly } from '../../../types/coins';
 
 interface AddWatchCoinDialogProps {
   openDialog: boolean;
   setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
   coins: Coin[];
+  fetchWatchListCoins: () => Promise<void>;
 }
 
 function AddWatchCoinDialog({
   openDialog,
   setOpenDialog,
   coins,
+  fetchWatchListCoins,
 }: AddWatchCoinDialogProps) {
   const navigate = useNavigate();
   const { tokens } = useAuth();
@@ -23,15 +25,17 @@ function AddWatchCoinDialog({
   const [selectedCoins, setSelectedCoins] = useState<Set<string>>(new Set());
 
   async function handleSubmit(): Promise<void> {
-    const selectedCoinsObj = coins
+    const selectedCoinsObj: CoinSymbolOnly[] = coins
       .filter((coin) => selectedCoins.has(coin.symbol))
-      .map((coin) => ({ name: coin.name, symbol: coin.symbol }));
+      .map((coin) => ({ symbol: coin.symbol }));
+
     const result = await addWatchListCoins(tokens.access, selectedCoinsObj);
 
     if (result.success) {
       setOpenDialog(false);
       setSelectedCoins(new Set());
-      navigate('/cryptocurrencies');
+      fetchWatchListCoins();
+      navigate('/watchlist');
     } else {
       setError('Failed to add coins. Please try again');
     }
