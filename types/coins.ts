@@ -7,4 +7,6 @@ export interface Coin {
   change24h: string;
 }
 
-export type watchListCoin = Omit<Coin, 'rank' | 'marketCap' | 'change24h' | 'price' | 'name'>;
+export interface CoinSymbolOnly {
+  symbol: string;
+}
