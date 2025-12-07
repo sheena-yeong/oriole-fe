@@ -7,7 +7,7 @@ import Cryptocurrencies from './pages/Cryptocurrencies.tsx';
 import oriole_logo from './assets/oriole_logo_v7.png';
 import NavBar from './components/NavBars/NavBar.tsx';
 import SettingsDropDown from './components/NavBars/SettingsDropDown.tsx';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getCoins } from './services/crypto';
 import type { Coin } from '../types/coins';
 import { useAuth } from '../hooks/useAuth.ts';
@@ -20,31 +20,31 @@ function App() {
   const [coins, setCoins] = useState<Coin[]>([]);
   const [watchListCoins, setWatchListCoins] = useState<Coin[]>([]);
 
+  const fetchCoins = useCallback(async () => {
+    if (!tokens.access) return;
+
+    try {
+      const result = await getCoins(tokens.access);
+      setCoins(result.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [tokens.access]);
+
+  const fetchWatchListCoins = useCallback(async () => {
+    if (!tokens.access) return;
+    try {
+      const result = await getWatchListCoins(tokens.access);
+      setWatchListCoins(result.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [tokens.access]);
+
   useEffect(() => {
-    const fetchCoins = async () => {
-      if (!tokens.access) return;
-
-      try {
-        const result = await getCoins(tokens.access);
-        setCoins(result.data);
-        console.log('Fetched coins', result.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    const fetchWatchListCoins = async () => {
-      if (!tokens.access) return;
-      try {
-        const result = await getWatchListCoins(tokens.access);
-        setWatchListCoins(result.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchCoins();
     fetchWatchListCoins();
-  }, [isAuthenticated, tokens.access]);
+  }, [fetchCoins, fetchWatchListCoins]);
 
   return (
     <div className="relative w-full h-full bg-black">
@@ -78,7 +78,16 @@ function App() {
               path="/cryptocurrencies"
               element={<Cryptocurrencies coins={coins} />}
             />
-            <Route path="/watchlist" element={<WatchList coins={coins} watchListCoins={watchListCoins}/>} />
+            <Route
+              path="/watchlist"
+              element={
+                <WatchList
+                  coins={coins}
+                  watchListCoins={watchListCoins}
+                  fetchWatchListCoins={fetchWatchListCoins}
+                />
+              }
+            />
             <Route path="/settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
