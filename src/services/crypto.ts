@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { watchListCoin } from '../../types/coins';
+import type { CoinIdOnly } from '../../types/coins';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -22,9 +22,10 @@ export const getCoins = async (token: string | null) => {
 
 export const addWatchListCoins = async (
   token: string | null,
-  coins: watchListCoin[]
+  coins: CoinIdOnly[]
 ) => {
   try {
+    console.log('addWatchListcoins frontend', coins);
     const res = await axios.post(`${BASE_URL}/coins/watchlist`, coins, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -53,6 +54,29 @@ export const getWatchListCoins = async (token: string | null) => {
     return {
       success: false,
       error: err instanceof Error ? err.message : 'Unable to fetch coins.',
+    };
+  }
+};
+
+export const deleteWatchListCoins = async (
+  token: string | null,
+  id: string
+) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/coins/watchlist`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        id,
+      },
+    });
+    return { success: true, data: res.data };
+  } catch (err) {
+    console.log('Failed to delete coins from watchlist', err);
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Unable to delete coins.',
     };
   }
 };
