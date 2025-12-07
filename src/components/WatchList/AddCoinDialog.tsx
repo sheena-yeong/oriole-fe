@@ -3,13 +3,14 @@ import { useAuth } from '../../../hooks/useAuth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addWatchListCoins } from '../../services/crypto';
-import type { Coin, CoinSymbolOnly } from '../../../types/coins';
+import type { Coin, CoinIdOnly } from '../../../types/coins';
 
 interface AddWatchCoinDialogProps {
   openDialog: boolean;
   setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
   coins: Coin[];
   fetchWatchListCoins: () => Promise<void>;
+  watchListCoins: Coin[];
 }
 
 function AddWatchCoinDialog({
@@ -17,31 +18,38 @@ function AddWatchCoinDialog({
   setOpenDialog,
   coins,
   fetchWatchListCoins,
+  watchListCoins,
 }: AddWatchCoinDialogProps) {
   const navigate = useNavigate();
   const { tokens } = useAuth();
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCoins, setSelectedCoins] = useState<Set<string>>(new Set());
+  const existingIds = new Set(watchListCoins.map((coin) => coin.id));
 
   async function handleSubmit(): Promise<void> {
-    const selectedCoinsObj: CoinSymbolOnly[] = coins
-      .filter((coin) => selectedCoins.has(coin.symbol))
-      .map((coin) => ({ symbol: coin.symbol }));
+    const selectedCoinsObj: CoinIdOnly[] = coins
+      .filter((coin) => selectedCoins.has(coin.id))
+      .map((coin) => ({ id: coin.id }));
+
+    console.log('selectedCoinsObj', selectedCoinsObj);
 
     const result = await addWatchListCoins(tokens.access, selectedCoinsObj);
 
     if (result.success) {
       setOpenDialog(false);
       setSelectedCoins(new Set());
-      fetchWatchListCoins();
+      await fetchWatchListCoins();
       navigate('/watchlist');
     } else {
       setError('Failed to add coins. Please try again');
+      console.error('Error details:', result.error);
     }
   }
 
   const toggleCoin = (coinId: string) => {
+    if (existingIds.has(coinId)) return;
+
     setSelectedCoins((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(coinId)) {
@@ -65,6 +73,7 @@ function AddWatchCoinDialog({
       onOpenChange={(state) => {
         setOpenDialog(state);
         setSelectedCoins(new Set());
+        setError('');
       }}
     >
       <DialogPrimitive.Portal>
@@ -88,7 +97,7 @@ function AddWatchCoinDialog({
             </button>
           </DialogPrimitive.Close>
 
-          <DialogPrimitive.Title className="text-2xl font-bold text-black mb-4">
+          <DialogPrimitive.Title className="text-2xl font-bold text-black dark:text-white mb-4">
             Add Coin
           </DialogPrimitive.Title>
 
@@ -118,35 +127,50 @@ function AddWatchCoinDialog({
                 </div>
               ) : (
                 <div className="p-2">
-                  {filteredCoins.map((coin) => (
-                    <div
-                      key={coin.symbol}
-                      onClick={() => toggleCoin(coin.symbol)}
-                      className={`
-                        flex items-center gap-3 p-3 rounded-md cursor-pointer transition-colors
-                        ${
-                          selectedCoins.has(coin.symbol)
-                            ? 'bg-orange-100 dark:bg-orange-900/30 border-2 border-[#fe5914]'
-                            : 'hover:bg-neutral-100 dark:hover:bg-neutral-800 border-2 border-transparent'
-                        }
-                        mb-2
-                      `}
-                    >
-                      <div className="flex-1">
-                        <div className="font-semibold text-black dark:text-white">
-                          {coin.name}
+                  {filteredCoins.map((coin) => {
+                    const isInWatchlist = existingIds.has(coin.id);
+                    const isSelected = selectedCoins.has(coin.id);
+
+                    return (
+                      <div
+                        key={coin.id}
+                        onClick={() => toggleCoin(coin.id)}
+                        className={`
+                          flex items-center gap-3 p-3 rounded-md transition-colors mb-2
+                          ${
+                            isInWatchlist
+                              ? 'bg-neutral-200 dark:bg-neutral-800 cursor-not-allowed opacity-60'
+                              : isSelected
+                              ? 'bg-orange-100 dark:bg-orange-900/30 border-2 border-[#fe5914] cursor-pointer'
+                              : 'hover:bg-neutral-100 dark:hover:bg-neutral-800 border-2 border-transparent cursor-pointer'
+                          }
+                        `}
+                      >
+                        <img 
+                          src={coin.image} 
+                          alt={coin.name}
+                          className="w-8 h-8 rounded-full"
+                        />
+                        <div className="flex-1">
+                          <div className="font-semibold text-black dark:text-white">
+                            {coin.name}
+                          </div>
+                          <div className="text-sm text-neutral-500 uppercase">
+                            {coin.symbol}
+                          </div>
                         </div>
-                        <div className="text-sm text-neutral-500 uppercase">
-                          {coin.symbol}
-                        </div>
+                        {isInWatchlist ? (
+                          <div className="text-neutral-500 text-sm font-medium">
+                            Already added
+                          </div>
+                        ) : isSelected ? (
+                          <div className="text-[#fe5914] font-bold text-xl">
+                            ✓
+                          </div>
+                        ) : null}
                       </div>
-                      {selectedCoins.has(coin.symbol) && (
-                        <div className="text-[#fe5914] font-bold text-xl">
-                          ✓
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -160,18 +184,23 @@ function AddWatchCoinDialog({
             )}
 
             {/* Error and Submit */}
-            <div className="flex justify-end gap-2 items-center">
-              {error && <p className="text-red-600 text-sm">{error}</p>}
-              <button
-                type="submit"
-                disabled={selectedCoins.size === 0}
-                className="rounded-md bg-[#fe5914] px-4 py-2 text-sm font-medium text-white 
-                  hover:bg-[#ff7a3c] transition-colors duration-200 ease-in-out
-                  disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Add {selectedCoins.size > 0 ? `${selectedCoins.size} ` : ''}Coin
-                {selectedCoins.size !== 1 ? 's' : ''}
-              </button>
+            <div className="flex flex-col gap-2">
+              {error && (
+                <p className="text-red-600 text-sm text-center">{error}</p>
+              )}
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  disabled={selectedCoins.size === 0}
+                  className="rounded-md bg-[#fe5914] px-4 py-2 text-sm font-medium text-white 
+                    hover:bg-[#ff7a3c] transition-colors duration-200 ease-in-out
+                    disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Add {selectedCoins.size > 0 ? `${selectedCoins.size} ` : ''}
+                  Coin
+                  {selectedCoins.size !== 1 ? 's' : ''}
+                </button>
+              </div>
             </div>
           </form>
         </DialogPrimitive.Content>
