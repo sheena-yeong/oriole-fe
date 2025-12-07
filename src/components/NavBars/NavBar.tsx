@@ -35,7 +35,7 @@ const NavBar: React.FC = () => {
                   : 'text-white hover:text-white/80'
               }`}
             >
-              WatchList
+              Watch List
             </Link>
           </NavigationMenu.Link>
         </NavigationMenu.Item>
