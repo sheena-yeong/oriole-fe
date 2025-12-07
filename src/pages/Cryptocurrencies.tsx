@@ -31,8 +31,16 @@ function Cryptocurrencies({ coins }: CryptocurrenciesProps) {
                 <td className="px-4 py-2">{coin.rank}</td>
                 <td className="px-4 py-2">{coin.name}</td>
                 <td className="px-4 py-2">{coin.symbol}</td>
-                <td className="px-4 py-2">{coin.price}</td>
-                <td className="px-4 py-2">{coin.marketCap}</td>
+                <td className="px-4 py-2">
+                  {Number(coin.price).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                  })}
+                </td>
+                <td className="px-4 py-2">
+                  {Number(coin.marketCap).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                  })}
+                </td>
                 <td
                   className={`px-4 py-2 ${
                     parseFloat(coin.change24h) >= 0
