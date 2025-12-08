@@ -37,6 +37,39 @@ function WatchList({
     setDeletingId(null);
   }
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  // Calculate pagination values
+  const totalPages = Math.ceil(watchListCoins.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentCoins = watchListCoins.slice(startIndex, endIndex);
+
+  // Generate page numbers to display
+  function getPageNumbers() {
+    const pages = [];
+    const maxVisible = 5;
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    const endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+    // Adjust start if we're near the end
+    if (endPage - startPage < maxVisible - 1) {
+      startPage = Math.max(1, endPage - maxVisible + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
+  function goToPage(page: number) {
+    setCurrentPage(page);
+  }
+
   return (
     <>
       {/* If list has coins, show table */}
@@ -67,7 +100,7 @@ function WatchList({
               </thead>
 
               <tbody className="divide-y divide-neutral-700">
-                {watchListCoins.map((coin) => (
+                {currentCoins.map((coin) => (
                   <tr
                     key={coin.id}
                     className="hover:bg-neutral-800 transition-colors"
@@ -140,6 +173,91 @@ function WatchList({
           >
             Add Coin
           </button>
+        </div>
+      )}
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className='flex items-center justify-between mt-4 px-4'>
+          <div className='text-sm text-gray-600'>
+            Showing {startIndex + 1} to{' '}
+            {Math.min(endIndex, watchListCoins.length)} of{' '}
+            {watchListCoins.length} coins
+          </div>
+
+          <div className='flex gap-2'>
+            {/* Previous Button */}
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-3 py-1 rounded border ${
+                currentPage === 1
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              Previous
+            </button>
+
+            {/* First page if not visible */}
+            {getPageNumbers()[0] > 1 && (
+              <>
+                <button
+                  onClick={() => goToPage(1)}
+                  className='px-3 py-1 rounded border bg-white text-gray-700 hover:bg-gray-50'
+                >
+                  1
+                </button>
+                {getPageNumbers()[0] > 2 && (
+                  <span className='px-2 py-1 text-gray-500'>...</span>
+                )}
+              </>
+            )}
+
+            {/* Page Numbers */}
+            {getPageNumbers().map((page) => (
+              <button
+                key={page}
+                onClick={() => goToPage(page)}
+                className={`px-3 py-1 rounded border ${
+                  currentPage === page
+                    ? 'bg-black text-white'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+
+            {/* Last page if not visible */}
+            {getPageNumbers()[getPageNumbers().length - 1] < totalPages && (
+              <>
+                {getPageNumbers()[getPageNumbers().length - 1] <
+                  totalPages - 1 && (
+                  <span className='px-2 py-1 text-gray-500'>...</span>
+                )}
+                <button
+                  onClick={() => goToPage(totalPages)}
+                  className='px-3 py-1 rounded border bg-white text-gray-700 hover:bg-gray-50'
+                >
+                  {totalPages}
+                </button>
+              </>
+            )}
+
+            {/* Next Button */}
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`px-3 py-1 rounded border ${
+                currentPage === totalPages
+                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
 
