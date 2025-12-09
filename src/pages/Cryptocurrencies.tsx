@@ -122,85 +122,84 @@ function Cryptocurrencies({ coins }: CryptocurrenciesProps) {
       </div>
 
       {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between mt-4 px-4">
-          <div className="text-sm text-gray-600">
-            Showing {startIndex + 1} to {Math.min(endIndex, coins.length)} of{' '}
-            {coins.length} coins
-          </div>
+{totalPages > 1 && (
+  <div className="flex items-center justify-between mt-4 px-4 text-white">
+    <div className="text-sm text-neutral-400">
+      Showing {startIndex + 1} to {Math.min(endIndex, coins.length)} of{' '}
+      {coins.length} coins
+    </div>
 
-          <div className="flex gap-2">
-            {/* Previous Button */}
-            <button
-              onClick={() => goToPage(currentPage - 1)}
-              disabled={currentPage === 1}
-              className={`px-3 py-1 rounded border ${
-                currentPage === 1
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
-              }`}
-            >
-              Previous
-            </button>
+    <div className="flex gap-2">
+      {/* Prev */}
+      <button
+        onClick={() => goToPage(currentPage - 1)}
+        disabled={currentPage === 1}
+        className={`px-3 py-1 rounded font-medium transition-colors ${
+          currentPage === 1
+            ? 'bg-neutral-700 text-neutral-400 cursor-not-allowed'
+            : 'bg-[#fe5914] text-white hover:bg-[#ff6b2a]'
+        }`}
+      >
+        Prev
+      </button>
 
-            {/* First page if not visible */}
-            {getPageNumbers()[0] > 1 && (
-              <>
-                <button
-                  onClick={() => goToPage(1)}
-                  className="px-3 py-1 rounded border bg-white text-gray-700 hover:bg-gray-50"
-                >
-                  1
-                </button>
-                {getPageNumbers()[0] > 2 && (
-                  <span className="px-2 py-1 text-gray-500">...</span>
-                )}
-              </>
-            )}
+      {/* First page */}
+      {getPageNumbers()[0] > 1 && (
+        <>
+          <button
+            onClick={() => goToPage(1)}
+            className="px-3 py-1 rounded font-medium bg-neutral-800 text-white hover:bg-[#fe5914] transition-colors"
+          >
+            1
+          </button>
+          {getPageNumbers()[0] > 2 && (
+            <span className="px-2 py-1 text-neutral-500">...</span>
+          )}
+        </>
+      )}
 
-            {/* Page Numbers */}
-            {getPageNumbers().map((page) => (
-              <button
-                key={page}
-                onClick={() => goToPage(page)}
-                className={`px-3 py-1 rounded border ${
-                  currentPage === page
-                    ? 'bg-black text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                {page}
-              </button>
-            ))}
+      {/* Page numbers */}
+      {getPageNumbers().map((page) => (
+        <button
+          key={page}
+          onClick={() => goToPage(page)}
+          className={`px-3 py-1 rounded font-medium transition-colors ${
+            currentPage === page
+              ? 'bg-[#fe5914] text-white'
+              : 'bg-neutral-800 text-white hover:bg-[#ff6b2a]'
+          }`}
+        >
+          {page}
+        </button>
+      ))}
 
-            {/* Last page if not visible */}
-            {getPageNumbers()[getPageNumbers().length - 1] < totalPages && (
-              <>
-                {getPageNumbers()[getPageNumbers().length - 1] <
-                  totalPages - 1 && (
-                  <span className="px-2 py-1 text-gray-500">...</span>
-                )}
-                <button
-                  onClick={() => goToPage(totalPages)}
-                  className="px-3 py-1 rounded border bg-white text-gray-700 hover:bg-gray-50"
-                >
-                  {totalPages}
-                </button>
-              </>
-            )}
+      {/* Last page */}
+      {getPageNumbers()[getPageNumbers().length - 1] < totalPages && (
+        <>
+          {getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1 && (
+            <span className="px-2 py-1 text-neutral-500">...</span>
+          )}
+          <button
+            onClick={() => goToPage(totalPages)}
+            className="px-3 py-1 rounded font-medium bg-neutral-800 text-white hover:bg-[#fe5914] transition-colors"
+          >
+            {totalPages}
+          </button>
+        </>
+      )}
 
-            {/* Next Button */}
-            <button
-              onClick={() => goToPage(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className={`px-3 py-1 rounded border ${
-                currentPage === totalPages
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
-              }`}
-            >
-              Next
-            </button>
+      {/* Next */}
+      <button
+        onClick={() => goToPage(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className={`px-3 py-1 rounded font-medium transition-colors ${
+          currentPage === totalPages
+            ? 'bg-neutral-700 text-neutral-400 cursor-not-allowed'
+            : 'bg-[#fe5914] text-white hover:bg-[#ff6b2a]'
+        }`}
+      >
+        Next
+      </button>
           </div>
         </div>
       )}

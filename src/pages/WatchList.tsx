@@ -5,6 +5,7 @@ import { MdDelete } from 'react-icons/md';
 import type { Coin } from '../../types/coins.ts';
 import { deleteWatchListCoins } from '../services/crypto.ts';
 import { useAuth } from '../../hooks/useAuth.ts';
+import CoinDetailsDialog from '../components/WatchList/CoinDetailsDialog';
 
 interface WatchListProps {
   coins: Coin[];
@@ -17,6 +18,8 @@ function WatchList({
   watchListCoins,
   fetchWatchListCoins,
 }: WatchListProps) {
+  const [selectedCoin, setSelectedCoin] = useState<Coin | null>(null);
+
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [error, setError] = useState<string>('');
@@ -89,13 +92,27 @@ function WatchList({
             <table className="min-w-full divide-y divide-neutral-700 rounded-lg bg-neutral-900 text-white">
               <thead className="bg-neutral-800">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Coin</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Symbol</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Rank</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Price</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Market Cap</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">24h Change</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold">Actions</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Coin
+                  </th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Symbol
+                  </th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Rank
+                  </th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Price
+                  </th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Market Cap
+                  </th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    24h Change
+                  </th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold">
+                    Actions
+                  </th>
                 </tr>
               </thead>
 
@@ -107,30 +124,44 @@ function WatchList({
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <img 
-                          src={coin.image} 
+                        <img
+                          src={coin.image}
                           alt={coin.name}
                           className="w-8 h-8 rounded-full"
                         />
-                        <span className="font-medium">{coin.name}</span>
+                        <button
+                          className="font-medium"
+                          onClick={() => setSelectedCoin(coin)}
+                        >
+                          {coin.name}
+                        </button>
                       </div>
                     </td>
-                    <td className="px-4 py-3 uppercase text-neutral-400">{coin.symbol}</td>
+                    <td className="px-4 py-3 uppercase text-neutral-400">
+                      {coin.symbol}
+                    </td>
                     <td className="px-4 py-3 text-neutral-400">#{coin.rank}</td>
                     <td className="px-4 py-3">
-                      ${coin.price.toLocaleString('en-US', {
+                      $
+                      {coin.price.toLocaleString('en-US', {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
                     </td>
                     <td className="px-4 py-3">
-                      ${coin.marketCap.toLocaleString('en-US', {
+                      $
+                      {coin.marketCap.toLocaleString('en-US', {
                         minimumFractionDigits: 0,
                         maximumFractionDigits: 0,
                       })}
                     </td>
-                    <td className={`px-4 py-3 font-semibold ${coin.change24h >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {coin.change24h >= 0 ? '+' : ''}{coin.change24h.toFixed(2)}%
+                    <td
+                      className={`px-4 py-3 font-semibold ${
+                        coin.change24h >= 0 ? 'text-green-500' : 'text-red-500'
+                      }`}
+                    >
+                      {coin.change24h >= 0 ? '+' : ''}
+                      {coin.change24h.toFixed(2)}%
                     </td>
                     <td className="px-4 py-3">
                       <button
@@ -177,86 +208,85 @@ function WatchList({
       )}
 
       {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className='flex items-center justify-between mt-4 px-4'>
-          <div className='text-sm text-gray-600'>
-            Showing {startIndex + 1} to{' '}
-            {Math.min(endIndex, watchListCoins.length)} of{' '}
-            {watchListCoins.length} coins
-          </div>
+{totalPages > 1 && (
+  <div className="flex items-center justify-between mt-4 px-4 text-white">
+    <div className="text-sm text-neutral-400">
+      Showing {startIndex + 1} to{' '}
+      {Math.min(endIndex, watchListCoins.length)} of{' '}
+      {watchListCoins.length} coins
+    </div>
 
-          <div className='flex gap-2'>
-            {/* Previous Button */}
-            <button
-              onClick={() => goToPage(currentPage - 1)}
-              disabled={currentPage === 1}
-              className={`px-3 py-1 rounded border ${
-                currentPage === 1
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
-              }`}
-            >
-              Previous
-            </button>
+    <div className="flex gap-2">
+      {/* Prev */}
+      <button
+        onClick={() => goToPage(currentPage - 1)}
+        disabled={currentPage === 1}
+        className={`px-3 py-1 rounded font-medium transition-colors ${
+          currentPage === 1
+            ? 'bg-neutral-700 text-neutral-400 cursor-not-allowed'
+            : 'bg-[#fe5914] text-white hover:bg-[#ff6b2a]'
+        }`}
+      >
+        Previous
+      </button>
 
-            {/* First page if not visible */}
-            {getPageNumbers()[0] > 1 && (
-              <>
-                <button
-                  onClick={() => goToPage(1)}
-                  className='px-3 py-1 rounded border bg-white text-gray-700 hover:bg-gray-50'
-                >
-                  1
-                </button>
-                {getPageNumbers()[0] > 2 && (
-                  <span className='px-2 py-1 text-gray-500'>...</span>
-                )}
-              </>
-            )}
+      {/* First page */}
+      {getPageNumbers()[0] > 1 && (
+        <>
+          <button
+            onClick={() => goToPage(1)}
+            className="px-3 py-1 rounded font-medium bg-neutral-800 text-white hover:bg-[#fe5914] transition-colors"
+          >
+            1
+          </button>
+          {getPageNumbers()[0] > 2 && (
+            <span className="px-2 py-1 text-neutral-500">...</span>
+          )}
+        </>
+      )}
 
-            {/* Page Numbers */}
-            {getPageNumbers().map((page) => (
-              <button
-                key={page}
-                onClick={() => goToPage(page)}
-                className={`px-3 py-1 rounded border ${
-                  currentPage === page
-                    ? 'bg-black text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                {page}
-              </button>
-            ))}
+      {/* Pages */}
+      {getPageNumbers().map((page) => (
+        <button
+          key={page}
+          onClick={() => goToPage(page)}
+          className={`px-3 py-1 rounded font-medium transition-colors ${
+            currentPage === page
+              ? 'bg-[#fe5914] text-white'
+              : 'bg-neutral-800 text-white hover:bg-[#ff6b2a]'
+          }`}
+        >
+          {page}
+        </button>
+      ))}
 
-            {/* Last page if not visible */}
-            {getPageNumbers()[getPageNumbers().length - 1] < totalPages && (
-              <>
-                {getPageNumbers()[getPageNumbers().length - 1] <
-                  totalPages - 1 && (
-                  <span className='px-2 py-1 text-gray-500'>...</span>
-                )}
-                <button
-                  onClick={() => goToPage(totalPages)}
-                  className='px-3 py-1 rounded border bg-white text-gray-700 hover:bg-gray-50'
-                >
-                  {totalPages}
-                </button>
-              </>
-            )}
+      {/* Last page */}
+      {getPageNumbers()[getPageNumbers().length - 1] < totalPages && (
+        <>
+          {getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1 && (
+            <span className="px-2 py-1 text-neutral-500">...</span>
+          )}
+          <button
+            onClick={() => goToPage(totalPages)}
+            className="px-3 py-1 rounded font-medium bg-neutral-800 text-white hover:bg-[#fe5914] transition-colors"
+          >
+            {totalPages}
+          </button>
+        </>
+      )}
 
-            {/* Next Button */}
-            <button
-              onClick={() => goToPage(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className={`px-3 py-1 rounded border ${
-                currentPage === totalPages
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 hover:bg-gray-50'
-              }`}
-            >
-              Next
-            </button>
+      {/* Next */}
+      <button
+        onClick={() => goToPage(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className={`px-3 py-1 rounded font-medium transition-colors ${
+          currentPage === totalPages
+            ? 'bg-neutral-700 text-neutral-400 cursor-not-allowed'
+            : 'bg-[#fe5914] text-white hover:bg-[#ff6b2a]'
+        }`}
+      >
+        Next
+      </button>
           </div>
         </div>
       )}
@@ -268,6 +298,13 @@ function WatchList({
         fetchWatchListCoins={fetchWatchListCoins}
         watchListCoins={watchListCoins}
       />
+
+      {selectedCoin && (
+        <CoinDetailsDialog
+          selectedCoin={selectedCoin}
+          onClose={() => setSelectedCoin(null)}
+        />
+      )}
     </>
   );
 }
