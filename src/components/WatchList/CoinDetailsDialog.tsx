@@ -75,8 +75,43 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
           </DialogPrimitive.Close>
 
           <DialogPrimitive.Title className="text-2xl font-bold text-black dark:text-white mb-4">
-            {selectedCoin.name} — ${selectedCoin.price}
+            {selectedCoin.name} — $
+            {selectedCoin.price.toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </DialogPrimitive.Title>
+          <div className="grid grid-cols-3 gap-4 mb-4 mt-2">
+            <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
+              <p className="text-md text-white font-bold">Rank</p>
+              <p className="text-sm font-semibold text-white">
+                #{selectedCoin.rank}
+              </p>
+            </div>
+
+            <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
+              <p className="text-md text-white font-bold">Market Cap</p>
+              <p className="text-sm font-semibold text-white">
+                ${selectedCoin.marketCap.toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+              </p>
+            </div>
+
+            <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
+              <p className="text-md text-white font-bold">24h Change</p>
+              <p
+                className={`text-sm font-semibold ${
+                  selectedCoin.change24h >= 0
+                    ? 'text-green-500'
+                    : 'text-red-500'
+                }`}
+              >
+                {selectedCoin.change24h}
+              </p>
+            </div>
+          </div>
 
           <div className="flex gap-2 mb-4 justify-end">
             <button
@@ -88,6 +123,17 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
               }`}
             >
               24h
+            </button>
+
+            <button
+              onClick={() => setDays(7)}
+              className={`px-3 py-1 text-xs font-medium rounded ${
+                days === 7
+                  ? 'bg-[#fe5914] text-white'
+                  : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+              }`}
+            >
+              7d
             </button>
 
             <button
