@@ -130,7 +130,7 @@ function WatchList({
                           className="w-8 h-8 rounded-full"
                         />
                         <button
-                          className="font-medium"
+                          className="hover:underline hover:cursor-pointer font-medium"
                           onClick={() => setSelectedCoin(coin)}
                         >
                           {coin.name}
