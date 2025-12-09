@@ -80,3 +80,26 @@ export const deleteWatchListCoins = async (
     };
   }
 };
+
+export const getMarketChart = async (token: string | null, coinId: string, days: number = 7) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/coins/${coinId}/market-chart`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        days,
+      },
+    });
+    return { success: true, data: res.data };
+  } catch (err) {
+    console.log('Failed to fetch market chart.', err);
+    return {
+      success: false,
+      error:
+        err instanceof Error
+          ? err.message
+          : 'Unable to fetch market chart coins.',
+    };
+  }
+};
