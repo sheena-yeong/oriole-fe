@@ -23,3 +23,9 @@ export interface CoinData {
   change24h: number;
   image: string;
 }
+
+export interface MarketChart {
+  prices: [number, number][];
+  market_caps: [number, number][];
+  total_volumes: [number, number][];
+}
