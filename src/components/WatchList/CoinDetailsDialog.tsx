@@ -1,0 +1,146 @@
+import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { useEffect, useState } from 'react';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
+import { getMarketChart } from '../../services/crypto';
+import type { Coin } from '../../../types/coins';
+import { useAuth } from '../../../hooks/useAuth';
+
+interface CoinDetailsDialogProps {
+  selectedCoin: Coin | null;
+  onClose: () => void;
+}
+
+type ChartPoint = {
+  time: string;
+  price: number;
+};
+
+function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
+  const open = !!selectedCoin;
+
+  const [data, setData] = useState<ChartPoint[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [days, setDays] = useState(7);
+
+  const { tokens } = useAuth();
+
+  useEffect(() => {
+    if (!selectedCoin) return;
+
+    async function load() {
+      setLoading(true);
+      try {
+        const res = await getMarketChart(tokens.access, selectedCoin.id, days);
+
+        const formatted: ChartPoint[] = res.data.prices.map(
+          ([timestamp, price]: [number, number]) => ({
+            time: new Date(timestamp).toLocaleDateString(),
+            price,
+          })
+        );
+
+        setData(formatted);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    load();
+  }, [selectedCoin, days]);
+
+  if (!selectedCoin) return null;
+
+  return (
+    <DialogPrimitive.Root open={open} onOpenChange={(o) => !o && onClose()}>
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50" />
+
+        <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-6 shadow-lg dark:bg-neutral-900 z-50 max-h-[80vh] flex flex-col">
+          <DialogPrimitive.Close asChild>
+            <button
+              className="absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white rounded-full p-1"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </DialogPrimitive.Close>
+
+          <DialogPrimitive.Title className="text-2xl font-bold text-black dark:text-white mb-4">
+            {selectedCoin.name} — ${selectedCoin.price}
+          </DialogPrimitive.Title>
+
+          <div className="flex gap-2 mb-4 justify-end">
+            <button
+              onClick={() => setDays(1)}
+              className={`px-3 py-1 text-xs font-medium rounded ${
+                days === 1
+                  ? 'bg-[#fe5914] text-white'
+                  : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+              }`}
+            >
+              24h
+            </button>
+
+            <button
+              onClick={() => setDays(30)}
+              className={`px-3 py-1 text-xs font-medium rounded ${
+                days === 30
+                  ? 'bg-[#fe5914] text-white'
+                  : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+              }`}
+            >
+              30d
+            </button>
+
+            <button
+              onClick={() => setDays(365)}
+              className={`px-3 py-1 text-xs font-medium rounded ${
+                days === 365
+                  ? 'bg-[#fe5914] text-white'
+                  : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+              }`}
+            >
+              1y
+            </button>
+          </div>
+
+          {loading && <p className="text-neutral-400">Loading chart…</p>}
+
+          {!loading && data.length > 0 && (
+            <div className="h-[300px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={data}>
+                  <XAxis dataKey="time" stroke="#888" />
+                  <YAxis stroke="#888" />
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="price"
+                    stroke="#fe5914"
+                    strokeWidth={2}
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+
+          <button className="mt-6 bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-2 rounded">
+            Buy Coin
+          </button>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
+  );
+}
+
+export default CoinDetailsDialog;
