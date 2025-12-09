@@ -37,6 +37,7 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
     async function load() {
       setLoading(true);
       try {
+        if (!selectedCoin) return;
         const res = await getMarketChart(tokens.access, selectedCoin.id, days);
 
         const formatted: ChartPoint[] = res.data.prices.map(
@@ -92,10 +93,11 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
             <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
               <p className="text-md text-white font-bold">Market Cap</p>
               <p className="text-sm font-semibold text-white">
-                ${selectedCoin.marketCap.toLocaleString('en-US', {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
+                $
+                {selectedCoin.marketCap.toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </p>
             </div>
 
