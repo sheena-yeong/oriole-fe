@@ -11,6 +11,7 @@ import {
 import { getMarketChart } from '../../services/crypto';
 import type { Coin } from '../../../types/coins';
 import { useAuth } from '../../../hooks/useAuth';
+import BuyCryptoDialog from './BuyCryptoDialog.tsx';
 
 interface CoinDetailsDialogProps {
   selectedCoin: Coin | null;
@@ -22,12 +23,16 @@ type ChartPoint = {
   price: number;
 };
 
-function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
+function CoinDetailsDialog({
+  selectedCoin,
+  onClose,
+}: CoinDetailsDialogProps) {
   const open = !!selectedCoin;
 
   const [data, setData] = useState<ChartPoint[]>([]);
   const [loading, setLoading] = useState(false);
   const [days, setDays] = useState(7);
+  const [isBuyOpen, setIsBuyOpen] = useState(false);
 
   const { tokens } = useAuth();
 
@@ -61,133 +66,152 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
   if (!selectedCoin) return null;
 
   return (
-    <DialogPrimitive.Root open={open} onOpenChange={(o) => !o && onClose()}>
-      <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50" />
+    <>
+      <DialogPrimitive.Root
+        open={open && !isBuyOpen}
+        onOpenChange={(o) => !o && onClose()}
+      >
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50" />
 
-        <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-6 shadow-lg dark:bg-neutral-900 z-50 max-h-[80vh] flex flex-col">
-          <DialogPrimitive.Close asChild>
-            <button
-              className="absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white rounded-full p-1"
-              aria-label="Close"
-            >
-              ✕
-            </button>
-          </DialogPrimitive.Close>
+          <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-6 shadow-lg dark:bg-neutral-900 z-50 max-h-[80vh] flex flex-col">
+            <DialogPrimitive.Close asChild>
+              <button
+                className="absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white rounded-full p-1"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </DialogPrimitive.Close>
 
-          <DialogPrimitive.Title className="text-2xl font-bold text-black dark:text-white mb-4">
-            {selectedCoin.name} — $
-            {selectedCoin.price.toLocaleString('en-US', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
-          </DialogPrimitive.Title>
-          <div className="grid grid-cols-3 gap-4 mb-4 mt-2">
-            <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
-              <p className="text-md text-white font-bold">Rank</p>
-              <p className="text-sm font-semibold text-white">
-                #{selectedCoin.rank}
-              </p>
+            <DialogPrimitive.Title className="text-2xl font-bold text-black dark:text-white mb-4">
+              {selectedCoin.name} — $
+              {selectedCoin.price.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </DialogPrimitive.Title>
+            <div className="grid grid-cols-3 gap-4 mb-4 mt-2">
+              <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
+                <p className="text-md text-white font-bold">Rank</p>
+                <p className="text-sm font-semibold text-white">
+                  #{selectedCoin.rank}
+                </p>
+              </div>
+
+              <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
+                <p className="text-md text-white font-bold">Market Cap</p>
+                <p className="text-sm font-semibold text-white">
+                  $
+                  {selectedCoin.marketCap.toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </p>
+              </div>
+
+              <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
+                <p className="text-md text-white font-bold">24h Change</p>
+                <p
+                  className={`text-sm font-semibold ${
+                    selectedCoin.change24h >= 0
+                      ? 'text-green-500'
+                      : 'text-red-500'
+                  }`}
+                >
+                  {selectedCoin.change24h}
+                </p>
+              </div>
             </div>
 
-            <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
-              <p className="text-md text-white font-bold">Market Cap</p>
-              <p className="text-sm font-semibold text-white">
-                $
-                {selectedCoin.marketCap.toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </p>
-            </div>
-
-            <div className="bg-neutral-900/90 rounded-lg p-3 text-center">
-              <p className="text-md text-white font-bold">24h Change</p>
-              <p
-                className={`text-sm font-semibold ${
-                  selectedCoin.change24h >= 0
-                    ? 'text-green-500'
-                    : 'text-red-500'
+            <div className="flex gap-2 mb-4 justify-end">
+              <button
+                onClick={() => setDays(1)}
+                className={`px-3 py-1 text-xs font-medium rounded ${
+                  days === 1
+                    ? 'bg-[#fe5914] text-white'
+                    : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
                 }`}
               >
-                {selectedCoin.change24h}
-              </p>
+                24h
+              </button>
+
+              <button
+                onClick={() => setDays(7)}
+                className={`px-3 py-1 text-xs font-medium rounded ${
+                  days === 7
+                    ? 'bg-[#fe5914] text-white'
+                    : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+                }`}
+              >
+                7d
+              </button>
+
+              <button
+                onClick={() => setDays(30)}
+                className={`px-3 py-1 text-xs font-medium rounded ${
+                  days === 30
+                    ? 'bg-[#fe5914] text-white'
+                    : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+                }`}
+              >
+                30d
+              </button>
+
+              <button
+                onClick={() => setDays(365)}
+                className={`px-3 py-1 text-xs font-medium rounded ${
+                  days === 365
+                    ? 'bg-[#fe5914] text-white'
+                    : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+                }`}
+              >
+                1y
+              </button>
             </div>
-          </div>
 
-          <div className="flex gap-2 mb-4 justify-end">
-            <button
-              onClick={() => setDays(1)}
-              className={`px-3 py-1 text-xs font-medium rounded ${
-                days === 1
-                  ? 'bg-[#fe5914] text-white'
-                  : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
-              }`}
-            >
-              24h
-            </button>
+            {loading && <p className="text-neutral-400">Loading chart…</p>}
 
-            <button
-              onClick={() => setDays(7)}
-              className={`px-3 py-1 text-xs font-medium rounded ${
-                days === 7
-                  ? 'bg-[#fe5914] text-white'
-                  : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
-              }`}
-            >
-              7d
-            </button>
+            {!loading && data.length > 0 && (
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={data}>
+                    <XAxis dataKey="time" stroke="#888" />
+                    <YAxis stroke="#888" />
+                    <Tooltip />
+                    <Line
+                      type="monotone"
+                      dataKey="price"
+                      stroke="#fe5914"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            )}
 
             <button
-              onClick={() => setDays(30)}
-              className={`px-3 py-1 text-xs font-medium rounded ${
-                days === 30
-                  ? 'bg-[#fe5914] text-white'
-                  : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
-              }`}
+              className="mt-6 bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-2 rounded"
+              onClick={() => {
+                setIsBuyOpen(true);
+              }}
             >
-              30d
+              Buy Crypto
             </button>
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
 
-            <button
-              onClick={() => setDays(365)}
-              className={`px-3 py-1 text-xs font-medium rounded ${
-                days === 365
-                  ? 'bg-[#fe5914] text-white'
-                  : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
-              }`}
-            >
-              1y
-            </button>
-          </div>
-
-          {loading && <p className="text-neutral-400">Loading chart…</p>}
-
-          {!loading && data.length > 0 && (
-            <div className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data}>
-                  <XAxis dataKey="time" stroke="#888" />
-                  <YAxis stroke="#888" />
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="price"
-                    stroke="#fe5914"
-                    strokeWidth={2}
-                    dot={false}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          )}
-
-          <button className="mt-6 bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-2 rounded">
-            Buy Coin
-          </button>
-        </DialogPrimitive.Content>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+      <BuyCryptoDialog
+        selectedCoin={selectedCoin}
+        onClose={() => {
+          setIsBuyOpen(false);
+          onClose();
+        }}
+        open={isBuyOpen}
+      />
+    </>
   );
 }
 
