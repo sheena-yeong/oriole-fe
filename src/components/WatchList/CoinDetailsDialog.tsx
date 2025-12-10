@@ -23,10 +23,7 @@ type ChartPoint = {
   price: number;
 };
 
-function CoinDetailsDialog({
-  selectedCoin,
-  onClose,
-}: CoinDetailsDialogProps) {
+function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
   const open = !!selectedCoin;
 
   const [data, setData] = useState<ChartPoint[]>([]);
@@ -74,7 +71,7 @@ function CoinDetailsDialog({
         <DialogPrimitive.Portal>
           <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50" />
 
-          <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-white p-6 shadow-lg dark:bg-neutral-900 z-50 max-h-[80vh] flex flex-col">
+          <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-neutral-200 p-6 shadow-lg dark:bg-neutral-900 z-50 max-h-[80vh] flex flex-col">
             <DialogPrimitive.Close asChild>
               <button
                 className="absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white rounded-full p-1"
@@ -84,7 +81,12 @@ function CoinDetailsDialog({
               </button>
             </DialogPrimitive.Close>
 
-            <DialogPrimitive.Title className="text-2xl font-bold text-black dark:text-white mb-4">
+            <DialogPrimitive.Title className="flex gap-3 text-2xl font-bold text-black dark:text-white mb-4">
+              <img
+                src={selectedCoin?.image}
+                alt={selectedCoin?.name}
+                className="w-8 h-8 rounded-full"
+              />
               {selectedCoin.name} — $
               {selectedCoin.price.toLocaleString('en-US', {
                 minimumFractionDigits: 2,
@@ -192,7 +194,7 @@ function CoinDetailsDialog({
             )}
 
             <button
-              className="mt-6 bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-2 rounded"
+              className="mt-6 shadow-lg bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-2 rounded-3xl"
               onClick={() => {
                 setIsBuyOpen(true);
               }}
