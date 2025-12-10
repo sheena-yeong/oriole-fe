@@ -40,6 +40,22 @@ const NavBar: React.FC = () => {
           </NavigationMenu.Link>
         </NavigationMenu.Item>
 
+        {/* watchlist */}
+        <NavigationMenu.Item>
+          <NavigationMenu.Link asChild>
+            <Link
+              to="/wallet"
+              className={`text-lg font-semibold transition-colors duration-200 cursor-pointer ${
+                pathname === '/wallet'
+                  ? 'text-orange-400'
+                  : 'text-white hover:text-white/80'
+              }`}
+            >
+              Wallet
+            </Link>
+          </NavigationMenu.Link>
+        </NavigationMenu.Item>
+
       </NavigationMenu.List>
     </NavigationMenu.Root>
   );
