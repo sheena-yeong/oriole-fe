@@ -1,13 +1,13 @@
 import empty_nest from '../assets/empty_nest.png';
 import AddCoinDialog from '../components/WatchList/AddCoinDialog.tsx';
-import { useState, useEffect } from 'react';
-import { MdDelete } from 'react-icons/md';
-import type { Coin } from '../../types/coins.ts';
-import { deleteWatchListCoins } from '../services/crypto.ts';
-import { useAuth } from '../../hooks/useAuth.ts';
 import CoinDetailsDialog from '../components/WatchList/CoinDetailsDialog';
-import FearGreedSemicircle from '../components/WatchList/FearGreedSemiCircle.tsx';
+import FearGreedSemicircle from '../components/WatchList/FearGreedSemicircle';
+import type { Coin } from '../../types/coins.ts';
+import { MdDelete } from 'react-icons/md';
+import { useAuth } from '../../hooks/useAuth.ts';
 import { getFearGreedLatest } from '../services/crypto.ts';
+import { useState, useEffect } from 'react';
+import { deleteWatchListCoins } from '../services/crypto.ts';
 
 interface WatchListProps {
   coins: Coin[];

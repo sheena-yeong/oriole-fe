@@ -1,7 +1,6 @@
 import SignIn from '../components/User/SignIn';
 import SignUp from '../components/User/SignUp';
 import prism_bg from '../assets/prism_bg.jpg';
-import PublicNavBar from '../components/NavBars/PublicNavBar.tsx';
 import oriole_logo from '../assets/oriole_logo_v7.png';
 
 function PublicPage() {
@@ -9,7 +8,6 @@ function PublicPage() {
     <>
           <header className="flex items-center justify-between px-2 py-4 relative z-20">
             <img src={oriole_logo} className="h-16" alt="logo" />
-            <PublicNavBar />
             <div className="flex gap-2 pr-5">
               <SignIn />
               <SignUp />
