@@ -55,7 +55,7 @@ function WatchList({
   }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   // Calculate pagination values
   const totalPages = Math.ceil(watchListCoins.length / itemsPerPage);
@@ -227,7 +227,7 @@ function WatchList({
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between mt-4 px-4 text-white">
+        <div className="flex items-center justify-between mt-4 px-4 ml-5 text-white">
           <div className="text-sm text-neutral-400">
             Showing {startIndex + 1} to{' '}
             {Math.min(endIndex, watchListCoins.length)} of{' '}
