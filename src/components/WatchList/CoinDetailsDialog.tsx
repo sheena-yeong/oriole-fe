@@ -116,12 +116,12 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
                 <p className="text-md text-white font-bold">24h Change</p>
                 <p
                   className={`text-sm font-semibold ${
-                    selectedCoin.change24h >= 0
+                    selectedCoin.change24h >= 0 && selectedCoin.change24h !== null
                       ? 'text-green-500'
                       : 'text-red-500'
                   }`}
                 >
-                  {selectedCoin.change24h}
+                  {selectedCoin.change24h !== null && selectedCoin.change24h !== undefined ? <>{selectedCoin.change24h}</> : 'No Data' }
                 </p>
               </div>
             </div>
