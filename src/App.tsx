@@ -16,7 +16,7 @@ import { getWatchListCoins } from './services/crypto';
 function App() {
   const location = useLocation();
   const publicPage = location.pathname == '/';
-  const { isAuthenticated, tokens } = useAuth();
+  const { tokens } = useAuth();
   const [coins, setCoins] = useState<Coin[]>([]);
   const [watchListCoins, setWatchListCoins] = useState<Coin[]>([]);
 
@@ -88,6 +88,8 @@ function App() {
                 />
               }
             />
+            <Route path="/wallet" />
+
             <Route path="/settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
