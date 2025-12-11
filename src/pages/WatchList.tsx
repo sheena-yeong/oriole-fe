@@ -92,8 +92,6 @@ function WatchList({
       {/* If list has coins, show table */}
       {hasCoins ? (
         <div className="p-5 overflow-x-hidden sm:overflow-x-auto w-full">
-          
-
           {error && (
             <div className="mt-2 p-3 bg-red-100 text-red-700 rounded-md mx-6">
               {error}
@@ -178,8 +176,15 @@ function WatchList({
                         coin.change24h >= 0 ? 'text-green-500' : 'text-red-500'
                       }`}
                     >
-                      {coin.change24h >= 0 ? '+' : ''}
-                      {coin.change24h.toFixed(2)}%
+                      {coin.change24h !== null &&
+                      coin.change24h !== undefined ? (
+                        <>
+                          {coin.change24h >= 0 ? '+' : ''}
+                          {coin.change24h.toFixed(2)}%
+                        </>
+                      ) : (
+                        <span className="text-neutral-400">N/A</span>
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       <button
