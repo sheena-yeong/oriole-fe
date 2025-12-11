@@ -7,12 +7,14 @@ interface BuyCryptoDialogProps {
   selectedCoin: Coin | null;
   open: boolean;
   onClose: () => void;
+  onBack: () => void;
 }
 
 function BuyCryptoDialog({
   selectedCoin,
   open,
   onClose,
+  onBack,
 }: BuyCryptoDialogProps) {
   // const open = !!selectedCoin;
 
@@ -61,7 +63,7 @@ function BuyCryptoDialog({
           </DialogPrimitive.Close>
 
           <DialogPrimitive.Title className="text-2xl font-bold text-black dark:text-white mb-4 justify-center flex">
-            <button className="absolute left-5">
+            <button className="absolute left-5" onClick={onBack}>
               <IoIosArrowRoundBack size={35} />
             </button>
             Buy {selectedCoin?.name}
@@ -81,7 +83,9 @@ function BuyCryptoDialog({
                   alt={selectedCoin?.name}
                   className="w-8 h-8 rounded-full"
                 />
-                <span className="text-white text-2xl">{selectedCoin?.symbol}</span>
+                <span className="text-white text-2xl">
+                  {selectedCoin?.symbol}
+                </span>
               </div>
 
               {/* Right side: coin input */}
@@ -94,7 +98,6 @@ function BuyCryptoDialog({
                   onChange={handleCoinChange}
                 />
 
-                {/* Thin white line under coin input */}
                 <div className="w-full h-px bg-white my-1" />
 
                 {/* Fiat input with USD */}
@@ -116,7 +119,12 @@ function BuyCryptoDialog({
             <h3 className="text-lg text-white dark:text-white">Pay with</h3>
           </div>
 
-          <button className="mt-6 bg-[#fe5914] hover:bg-[#ff6b2a] shadow-lg text-white font-semibold px-4 py-3 rounded-3xl">
+          <button
+            className={`mt-6 bg-[#fe5914] hover:bg-[#ff6b2a] shadow-lg text-white font-semibold px-4 py-3 rounded-3xl ${
+              Number(coinAmount) > 0 ? '' : 'opacity-50 cursor-not-allowed'
+            } `}
+            disabled={Number(coinAmount) <= 0}
+          >
             Confirm
           </button>
         </DialogPrimitive.Content>
