@@ -199,7 +199,7 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
                 setIsBuyOpen(true);
               }}
             >
-              Buy Crypto
+              Buy {selectedCoin.name}
             </button>
           </DialogPrimitive.Content>
         </DialogPrimitive.Portal>
@@ -212,6 +212,7 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
           onClose();
         }}
         open={isBuyOpen}
+        onBack={() => setIsBuyOpen(false)}
       />
     </>
   );
