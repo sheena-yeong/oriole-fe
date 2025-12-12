@@ -20,6 +20,7 @@ export interface AuthContextType {
     firstName: string;
     lastName: string;
   }) => Promise<{ success: boolean; error?: string; message?: string }>;
+  initializing: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);

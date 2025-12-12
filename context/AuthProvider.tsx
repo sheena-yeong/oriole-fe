@@ -12,6 +12,7 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const [initializing, setInitializing] = useState(true);
   const [tokens, setTokens] = useState<{ access: string | null }>({
     access: null,
   });
@@ -24,13 +25,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       try {
         const payload = JSON.parse(atob(stored.split('.')[1]));
         setUser({
-          id: payload.id,
+          id: payload._id,
           email: payload.email,
         });
       } catch {
         localStorage.removeItem('access_token');
       }
     }
+    setInitializing(false);
   }, []);
 
   async function signIn(email: string, password: string) {
@@ -92,6 +94,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     signOut,
     signUp,
     isAuthenticated: !!user,
+    initializing,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
