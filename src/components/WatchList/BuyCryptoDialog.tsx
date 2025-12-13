@@ -221,7 +221,7 @@ function BuyCryptoDialog({
               >
                 <PaymentForm
                   amount={parseFloat(fiatAmount)}
-                  coinSymbol={selectedCoin?.symbol || ''}
+                  coinSymbol={selectedCoin?.symbol}
                   coinAmount={coinAmount}
                   onSuccess={onClose}
                 />
