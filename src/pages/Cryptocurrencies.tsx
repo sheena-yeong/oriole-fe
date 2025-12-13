@@ -1,4 +1,4 @@
-import type { Coin } from '../../types/coins';
+import type { Coin } from '../types/coins';
 import { useState } from 'react';
 
 interface CryptocurrenciesProps {

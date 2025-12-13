@@ -1,7 +1,7 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IoMdSettings } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../hooks/useAuth.ts';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function SettingsDropDown() {
   const { signOut } = useAuth();

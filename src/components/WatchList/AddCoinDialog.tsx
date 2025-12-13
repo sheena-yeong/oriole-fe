@@ -1,9 +1,9 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addWatchListCoins } from '../../services/crypto';
-import type { Coin, CoinIdOnly } from '../../../types/coins';
+import type { Coin, CoinIdOnly } from '../../types/coins';
 
 interface AddWatchCoinDialogProps {
   openDialog: boolean;

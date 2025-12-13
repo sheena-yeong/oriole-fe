@@ -2,10 +2,10 @@ import empty_nest from '../assets/empty_nest.png';
 import AddCoinDialog from '../components/WatchList/AddCoinDialog.tsx';
 import CoinDetailsDialog from '../components/WatchList/CoinDetailsDialog';
 import FearGreedSemicircle from '../components/WatchList/FearGreedSemicircle';
-import type { Coin } from '../../types/coins.ts';
+import type { Coin } from '../types/coins';
 import { MdDelete } from 'react-icons/md';
-import { useAuth } from '../../hooks/useAuth.ts';
-import { getFearGreedLatest } from '../services/crypto.ts';
+import { useAuth } from '../hooks/useAuth';
+import { getFearGreedLatest } from '../services/crypto';
 import { useState, useEffect } from 'react';
 import { deleteWatchListCoins } from '../services/crypto.ts';
 

@@ -1,12 +1,12 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import type { Coin } from '../../../types/coins';
+import type { Coin } from '../../types/coins';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from './PaymentForm';
 import { createPaymentIntent } from '../../services/payment';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY!);
 

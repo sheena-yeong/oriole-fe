@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { CoinIdOnly } from '../../types/coins';
+import type { CoinIdOnly } from '../types/coins';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

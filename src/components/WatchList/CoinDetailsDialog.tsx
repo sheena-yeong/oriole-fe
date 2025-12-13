@@ -9,8 +9,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { getMarketChart } from '../../services/crypto';
-import type { Coin } from '../../../types/coins';
-import { useAuth } from '../../../hooks/useAuth';
+import type { Coin } from '../../types/coins.ts';
+import { useAuth } from '../../hooks/useAuth';
 import BuyCryptoDialog from './BuyCryptoDialog.tsx';
 
 interface CoinDetailsDialogProps {

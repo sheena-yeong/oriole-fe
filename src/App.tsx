@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import ProtectedRoute from '../Routes/ProtectedRoute.tsx';
+import ProtectedRoute from './Routes/ProtectedRoute.tsx';
 import PublicPage from './pages/PublicPage.tsx';
 import WatchList from './pages/WatchList.tsx';
 import Settings from './pages/Settings.tsx';
@@ -9,8 +9,8 @@ import NavBar from './components/NavBars/NavBar.tsx';
 import SettingsDropDown from './components/NavBars/SettingsDropDown.tsx';
 import { useState, useEffect, useCallback } from 'react';
 import { getCoins } from './services/crypto';
-import type { Coin } from '../types/coins';
-import { useAuth } from '../hooks/useAuth.ts';
+import type { Coin } from './types/coins.ts';
+import { useAuth } from './hooks/useAuth.ts';
 import { getWatchListCoins } from './services/crypto';
 import PaymentSuccess from './pages/PaymentSuccess.tsx';
 import Nest from './pages/Nest.tsx';
