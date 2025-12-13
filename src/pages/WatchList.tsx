@@ -52,7 +52,7 @@ function WatchList({
       }
     }
     getFG();
-  }, []);
+  }, [tokens.access]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
