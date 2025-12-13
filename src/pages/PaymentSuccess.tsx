@@ -7,7 +7,7 @@ function PaymentSuccess() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/wallet');
+      navigate('/nest');
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -32,7 +32,7 @@ function PaymentSuccess() {
         </p>
 
         <p className="text-sm text-neutral-500">
-          Redirecting to your wallet…
+          Redirecting to your nest
         </p>
       </div>
     </div>

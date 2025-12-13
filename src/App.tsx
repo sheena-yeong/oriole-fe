@@ -13,6 +13,7 @@ import type { Coin } from '../types/coins';
 import { useAuth } from '../hooks/useAuth.ts';
 import { getWatchListCoins } from './services/crypto';
 import PaymentSuccess from './pages/PaymentSuccess.tsx';
+import Nest from './pages/Nest.tsx';
 
 function App() {
   const location = useLocation();
@@ -89,11 +90,10 @@ function App() {
                 />
               }
             />
-            <Route path="/wallet" />
+            <Route path="/nest" element={<Nest />} />
 
             <Route path="/settings" element={<Settings />} />
             <Route path="/success" element={<PaymentSuccess />} />
-            
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

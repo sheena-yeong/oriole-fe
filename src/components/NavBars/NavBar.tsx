@@ -44,14 +44,14 @@ const NavBar: React.FC = () => {
         <NavigationMenu.Item>
           <NavigationMenu.Link asChild>
             <Link
-              to="/wallet"
+              to="/nest"
               className={`text-lg font-semibold transition-colors duration-200 cursor-pointer ${
-                pathname === '/wallet'
+                pathname === '/nest'
                   ? 'text-orange-400'
                   : 'text-white hover:text-white/80'
               }`}
             >
-              Wallet
+              Nest
             </Link>
           </NavigationMenu.Link>
         </NavigationMenu.Item>

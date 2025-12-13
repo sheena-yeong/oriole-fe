@@ -36,17 +36,6 @@ export default function SettingsDropDown() {
             text-neutral-200
           "
         >
-          <DropdownMenu.Item
-            className="
-              px-3 py-2 
-              rounded-lg 
-              hover:bg-neutral-800/60 
-              transition 
-              cursor-pointer
-            "
-          >
-            Profile
-          </DropdownMenu.Item>
 
           <DropdownMenu.Item
             className="
