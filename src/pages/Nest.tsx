@@ -1,3 +1,4 @@
+import Wallet from '../components/Nest/Wallet';
 import {
   LineChart,
   Line,
@@ -27,16 +28,7 @@ function Nest() {
 
   return (
     <>
-      <div className="p-5 overflow-x-hidden sm:overflow-x-auto w-full"></div>
-
-      <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col gap-4 w-70 m-6">
-        <h3 className="font-poppins not-[]:font-thin text-xl text-white">
-          Your balance
-        </h3>
-        <h3 className="font-poppins font-semibold text-3xl text-white">
-          $1,000,000
-        </h3>
-      </div>
+      <Wallet />
 
       <h3 className="font-poppins pl-6 pt-5 font-semibold text-2xl text-white">
         Portfolio
