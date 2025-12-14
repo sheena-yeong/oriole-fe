@@ -15,7 +15,6 @@ interface WalletDialogProps {
 
 function WalletDialog({ open, onClose }: WalletDialogProps) {
   const { tokens } = useAuth();
-
   const [amount, setAmount] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
@@ -144,7 +143,6 @@ function WalletDialog({ open, onClose }: WalletDialogProps) {
             >
               <WalletPaymentForm
                 amount={parseFloat(amount)}
-                onSuccess={resetAndClose}
               />
             </Elements>
           )}
