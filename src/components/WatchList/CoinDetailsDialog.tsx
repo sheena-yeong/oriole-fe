@@ -12,6 +12,7 @@ import { getMarketChart } from '../../services/crypto';
 import type { Coin } from '../../types/coins.ts';
 import { useAuth } from '../../hooks/useAuth';
 import BuyCryptoDialog from './BuyCryptoDialog.tsx';
+import { fetchWalletBalance } from '../../services/wallet.ts';
 
 interface CoinDetailsDialogProps {
   selectedCoin: Coin | null;
@@ -27,14 +28,27 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
   const open = !!selectedCoin;
 
   const [data, setData] = useState<ChartPoint[]>([]);
+  const [walletBalance, setWalletBalance] = useState(0);
   const [loading, setLoading] = useState(false);
   const [days, setDays] = useState(7);
   const [isBuyOpen, setIsBuyOpen] = useState(false);
 
   const { tokens } = useAuth();
 
+  const fetchBalance = async () => {
+    if (!tokens.access) return;
+    try {
+      const data = await fetchWalletBalance(tokens.access);
+      setWalletBalance(Number(data.balance));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     if (!selectedCoin) return;
+
+    fetchBalance();
 
     async function load() {
       setLoading(true);
@@ -213,6 +227,7 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
         }}
         open={isBuyOpen}
         onBack={() => setIsBuyOpen(false)}
+        walletBalance={walletBalance}
       />
     </>
   );
