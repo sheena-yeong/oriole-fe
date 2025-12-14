@@ -1,4 +1,8 @@
+import { useEffect, useState } from 'react';
 import Wallet from '../components/Nest/Wallet';
+import { fetchUserPortfolio } from '../services/portfolio';
+import { useAuth } from '../hooks/useAuth';
+import type { PortfolioItem } from '../types/portfolioData';
 import {
   LineChart,
   Line,
@@ -10,11 +14,6 @@ import {
 } from 'recharts';
 
 function Nest() {
-  const items = [
-    { name: 'Bitcoin', symbol: 'BTC', amount: 0.12, usdValue: 7200 },
-    { name: 'Ethereum', symbol: 'ETH', amount: 2, usdValue: 3600 },
-    { name: 'Cardano', symbol: 'ADA', amount: 150, usdValue: 180 },
-  ];
 
   const data = [
     { time: '2025-12-01', price: 11000 },
@@ -25,6 +24,29 @@ function Nest() {
     { time: '2025-12-06', price: 12000 },
     { time: '2025-12-07', price: 12500 },
   ];
+
+  const { tokens } = useAuth();
+  const [portfolioData, setPortfolioData] = useState<PortfolioItem[]>([]);
+
+  useEffect(() => {
+    const getPortfolioData = async () => {
+      if (!tokens.access) return;
+      try {
+        const result = await fetchUserPortfolio(tokens.access);
+
+        if ('error' in result) {
+        console.error('Error fetching portfolio:', result.error);
+        return;
+      }
+        console.log('portfolio data', result.data.portfolio);
+        setPortfolioData(result.data.portfolio);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getPortfolioData();
+  }, [tokens.access]);
 
   return (
     <>
@@ -72,19 +94,19 @@ function Nest() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <tr key={item.symbol} className="border-b border-gray-800">
+            {portfolioData.map((item) => (
+              <tr key={item.coinSymbol} className="border-b border-gray-800">
                 <td className="py-3">
                   <div className="flex flex-col">
-                    <span className="font-medium">{item.name}</span>
-                    <span className="text-gray-400 text-sm">{item.symbol}</span>
+                    {/* <span className="font-medium">{item.name}</span> */}
+                    <span className="text-gray-400 text-sm">{item.coinSymbol}</span>
                   </div>
                 </td>
                 <td className="py-3 text-right">
                   <div className="flex flex-col items-end">
-                    <span className="font-medium">{item.amount}</span>
+                    <span className="font-medium">{item.quantity}</span>
                     <span className="text-gray-400 text-sm">
-                      ${item.usdValue.toFixed(2)}
+                      ${parseFloat(item.buyPrice).toFixed(2)}
                     </span>
                   </div>
                 </td>
