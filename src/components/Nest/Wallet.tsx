@@ -1,8 +1,29 @@
 import WalletDialog from './WalletDialog';
 import { useState } from 'react';
+import { fetchWalletBalance } from '../../services/wallet';
+import { useEffect } from 'react';
+import { useAuth } from '../../hooks/useAuth';
 
 function Wallet() {
   const [isWalletDialogOpen, setIsWalletDialogOpen] = useState(false);
+  const [walletBalance, setWalletBalance] = useState(0);
+
+  const { tokens } = useAuth();
+
+  const fetchBalance = async () => {
+    if (!tokens.access) return;
+
+    try {
+      const data = await fetchWalletBalance(tokens.access);
+      setWalletBalance(Number(data.balance));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchBalance();
+  }, []);
 
   return (
     <>
@@ -13,7 +34,7 @@ function Wallet() {
           Your balance (USD)
         </h3>
         <h3 className="font-poppins font-semibold text-3xl text-white">
-          $1,000,000
+          {walletBalance}
         </h3>
         <button
           className="shadow-lg bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-2 rounded-3xl"
