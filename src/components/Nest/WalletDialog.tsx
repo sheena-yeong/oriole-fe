@@ -71,14 +71,14 @@ function WalletDialog({ open, onClose }: WalletDialogProps) {
             </button>
           </DialogPrimitive.Close>
 
-          <DialogPrimitive.Title className="text-xl font-bold text-center text-black dark:text-white">
+          <DialogPrimitive.Title className="text-xl font-bold text-center text-black dark:text-white mb-5">
             {step === 'input' ? 'Top Up Wallet' : 'Complete Payment'}
           </DialogPrimitive.Title>
 
           {step === 'input' && (
             <>
               <div className="bg-neutral-900 rounded-xl p-6 mb-6">
-                <label className="block text-white mb-2 text-sm">
+                <label className="block text-white mb-3 text-sm">
                   Amount (USD)
                 </label>
                 <div className="flex gap-2 mb-4">
@@ -87,7 +87,7 @@ function WalletDialog({ open, onClose }: WalletDialogProps) {
                       key={value}
                       type="button"
                       onClick={() => setAmount(value.toFixed(2))}
-                      className="px-4 py-2 rounded-full bg-neutral-800 text-white hover:bg-neutral-700"
+                      className="w-15 py-2 rounded-full bg-neutral-800 text-white hover:bg-neutral-700"
                     >
                       ${value}
                     </button>
@@ -120,12 +120,11 @@ function WalletDialog({ open, onClose }: WalletDialogProps) {
                 appearance: {
                   theme: 'night',
                   variables: {
-                    colorBackground: '#0b0b0b',
-                    colorPrimary: '#000000',
-
                     colorText: '#ffffff',
-                    colorTextPlaceholder: '#ffffff',
-                    colorTextSecondary: '#000000',
+                    colorTextSecondary: '#ffffff',
+                    colorIcon: '#ffffff',
+                    colorPrimary: '#000000',
+                    colorBackground: '#0b0b0b',
                   },
                   rules: {
                     '.Input': {
