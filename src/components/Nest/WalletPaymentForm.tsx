@@ -7,13 +7,9 @@ import {
 
 interface WalletPaymentFormProps {
   amount: number;
-  onSuccess: () => void;
 }
 
-function WalletPaymentForm({
-  amount,
-  onSuccess,
-}: WalletPaymentFormProps) {
+function WalletPaymentForm({ amount }: WalletPaymentFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -33,15 +29,13 @@ function WalletPaymentForm({
       const { error: submitError } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/success`,
+          return_url: `${window.location.origin}/wallet/success`
         },
       });
 
       if (submitError) {
         setError(submitError.message || 'Payment failed');
         setLoading(false);
-      } else {
-        onSuccess();
       }
     } catch (err) {
       console.log(err);
@@ -51,7 +45,7 @@ function WalletPaymentForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <PaymentElement 
+      <PaymentElement
         options={{
           layout: 'tabs',
         }}
