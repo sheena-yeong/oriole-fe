@@ -34,7 +34,7 @@ function Wallet() {
           Your balance (USD)
         </h3>
         <h3 className="font-poppins font-semibold text-3xl text-white">
-          {walletBalance}
+          {walletBalance.toLocaleString()}
         </h3>
         <button
           className="shadow-lg bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-2 rounded-3xl"
