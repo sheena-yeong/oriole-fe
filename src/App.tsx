@@ -14,6 +14,7 @@ import { useAuth } from './hooks/useAuth.ts';
 import { getWatchListCoins } from './services/crypto';
 import PaymentSuccess from './pages/PaymentSuccess.tsx';
 import Nest from './pages/Nest.tsx';
+import WalletSuccessPage from './pages/WalletSuccess.tsx';
 
 function App() {
   const location = useLocation();
@@ -94,6 +95,7 @@ function App() {
 
             <Route path="/settings" element={<Settings />} />
             <Route path="/success" element={<PaymentSuccess />} />
+            <Route path="/wallet/success" element={<WalletSuccessPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
