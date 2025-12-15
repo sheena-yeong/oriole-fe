@@ -5,9 +5,6 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 type createPaymentIntentFn = (
   token: string | null,
   fiatAmount: number,
-  coinSymbol: string,
-  coinAmount: string,
-  coinId: string
 ) => Promise<
   | { success: true; data: { clientSecret: string; paymentIntentId: number } }
   | { success: false; error: string }
@@ -16,9 +13,6 @@ type createPaymentIntentFn = (
 export const createPaymentIntent: createPaymentIntentFn = async (
   token,
   fiatAmount,
-  coinSymbol,
-  coinAmount,
-  coinId
 ) => {
   try {
     const res = await axios.post(
@@ -27,9 +21,7 @@ export const createPaymentIntent: createPaymentIntentFn = async (
         amount: fiatAmount,
         currency: 'usd',
         metadata: {
-          coinSymbol,
-          coinAmount,
-          coinId,
+          type: 'wallet_topup',
         },
       },
       {
