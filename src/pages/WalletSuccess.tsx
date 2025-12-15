@@ -82,10 +82,10 @@ function WalletSuccessPage() {
             Please check your wallet to verify the transaction.
           </p>
           <button
-            onClick={() => navigate('/wallet')}
+            onClick={() => navigate('/nest')}
             className="w-full bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-3 rounded-3xl transition-colors"
           >
-            Go to Wallet
+            Go to Nest
           </button>
         </div>
       </div>
@@ -121,7 +121,7 @@ function WalletSuccessPage() {
 
         {balance !== null && balance !== undefined && (
           <div className="bg-neutral-700 rounded-lg p-4 mb-6">
-            <p className="text-neutral-400 text-sm mb-1">Current Balance</p>
+            <p className="text-neutral-400 text-sm mb-1">New Balance</p>
             <p className="text-3xl font-bold text-white">
               ${balance.toFixed(2)}
             </p>
