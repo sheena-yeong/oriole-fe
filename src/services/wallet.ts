@@ -15,7 +15,7 @@ export const fetchWalletBalance = async (
 };
 
 interface PurchaseCryptoPayload {
-  coinSymbol: string;
+  coinId: string;
   quantity: number;
   buyPrice: number;
   totalCost: number;
@@ -24,7 +24,7 @@ interface PurchaseCryptoPayload {
 interface PurchaseCryptoSuccess {
   message: string;
   coin: {
-    symbol: string;
+    id: string;
     quantity: number;
   };
   newWalletBalance: number;

@@ -80,7 +80,7 @@ function BuyCryptoDialog({
     setError(null);
 
     console.log('Purchasing:', {
-      coinSymbol: selectedCoin.symbol,
+      coinId: selectedCoin.id,
       quantity: quantity,
       buyPrice: selectedCoin.price,
       totalCost: totalCost,
@@ -88,7 +88,7 @@ function BuyCryptoDialog({
 
     try {
       await purchaseCrypto(tokens.access, {
-        coinSymbol: selectedCoin.symbol,
+        coinId: selectedCoin.id,
         quantity: quantity,
         buyPrice: selectedCoin.price,
         totalCost: totalCost,
@@ -145,9 +145,6 @@ function BuyCryptoDialog({
             </DialogPrimitive.Title>
 
             <div className="bg-neutral-900/90 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col gap-4 max-w-2xl m-3">
-              <h3 className="italic text-lg text-white dark:text-white">
-                I want
-              </h3>
 
               <div className="flex justify-between items-center gap-4">
                 <div className="flex items-center gap-2 w-36">
