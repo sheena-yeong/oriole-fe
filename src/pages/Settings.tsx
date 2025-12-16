@@ -16,7 +16,7 @@ function Settings() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPassword.length < 6 || confirmPassword.length < 6) {
-      setToastMessage("Password must be at least 6 characters.");
+      setToastMessage('Password must be at least 6 characters.');
       setOpenAlert(true);
       return;
     }
@@ -40,10 +40,12 @@ function Settings() {
       setNewPassword('');
       setConfirmPassword('');
     } catch (err) {
-      console.log(err);
-      setToastMessage(err.message);
-      setOpenAlert(true);
-      console.log('Failed to change password', err);
+      if (err instanceof Error) {
+        console.log(err);
+        setToastMessage(err.message);
+        setOpenAlert(true);
+        console.log('Failed to change password', err);
+      }
     }
   };
 
