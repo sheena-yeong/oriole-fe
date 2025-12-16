@@ -16,6 +16,7 @@ import { getTopGainers } from '../services/crypto';
 import { getTopLosers } from '../services/crypto';
 import { useState, useEffect } from 'react';
 import { deleteWatchListCoins } from '../services/crypto.ts';
+import { IoIosSearch } from 'react-icons/io';
 
 interface WatchListProps {
   coins: Coin[];
@@ -41,6 +42,19 @@ function WatchList({
   const [error, setError] = useState<string>('');
   const hasCoins = watchListCoins && watchListCoins.length > 0;
   const { tokens } = useAuth();
+
+  const [query, setQuery] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const filteredCoins = watchListCoins.filter(
+    (coin) =>
+      coin.name.toLowerCase().includes(query.toLowerCase()) ||
+      coin.symbol.toLowerCase().includes(query.toLowerCase())
+  );
 
   async function handleDelete(id: string) {
     setDeletingId(id);
@@ -108,10 +122,10 @@ function WatchList({
   const itemsPerPage = 10;
 
   // Calculate pagination values
-  const totalPages = Math.ceil(watchListCoins.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredCoins.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentCoins = watchListCoins.slice(startIndex, endIndex);
+  const currentCoins = filteredCoins.slice(startIndex, endIndex);
 
   // Generate page numbers to display
   function getPageNumbers() {
@@ -139,7 +153,7 @@ function WatchList({
 
   return (
     <>
-      <div className="flex gap-5 m-6 p-6">
+      <div className="flex gap-5 p-6 ml-6">
         <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-64 h-50">
           <h3 className="font-semibold text-lg text-center text-white dark:text-white">
             Fear and Greed Index
@@ -170,7 +184,7 @@ function WatchList({
           {losers !== null && <TopLosersChart losers={losers} />}
         </div>
       </div>
-      
+
       {/* If list has coins, show table */}
       {hasCoins ? (
         <div className="p-5 overflow-x-hidden sm:overflow-x-auto w-full">
@@ -179,6 +193,21 @@ function WatchList({
               {error}
             </div>
           )}
+
+          <div className="relative w-full max-w-md ml-6 mb-3">
+            <IoIosSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="search"
+              value={query}
+              onChange={handleChange}
+              placeholder="Search..."
+              className="
+                    w-full pl-10 pr-4 py-2 rounded-full bg-gray-800 text-white placeholder-gray-400
+                    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500
+                    transition-shadow duration-200
+                  "
+            />
+          </div>
 
           <div className="mx-6 overflow-x-auto">
             <table className="min-w-full divide-y divide-neutral-700 rounded-lg bg-neutral-900 text-white">
