@@ -3,12 +3,15 @@ import AddCoinDialog from '../components/WatchList/AddCoinDialog.tsx';
 import CoinDetailsDialog from '../components/WatchList/CoinDetailsDialog';
 import FearGreedSemicircle from '../components/WatchList/FearGreedSemicircle';
 import TrendingCoinsChart from '../components/WatchList/TrendingCoinsChart.tsx';
+import TopGainersChart from '../components/WatchList/TopGainersChart.tsx';
 import type { Coin } from '../types/coins';
 import type { TrendingCoinItem } from '../types/watchlistData.ts';
+import type { CoinMarket } from '../types/watchlistData.ts';
 import { MdDelete } from 'react-icons/md';
 import { useAuth } from '../hooks/useAuth';
 import { getFearGreedLatest } from '../services/crypto';
 import { getTrendingSearches } from '../services/crypto';
+import { getTopGainers } from '../services/crypto';
 import { useState, useEffect } from 'react';
 import { deleteWatchListCoins } from '../services/crypto.ts';
 
@@ -30,6 +33,8 @@ function WatchList({
   const [trendingCoins, setTrendingCoins] = useState<TrendingCoinItem[] | null>(
     null
   );
+  const [gainers, setGainers] = useState<CoinMarket[] | null>(null)
+
   const [error, setError] = useState<string>('');
   const hasCoins = watchListCoins && watchListCoins.length > 0;
   const { tokens } = useAuth();
@@ -68,8 +73,19 @@ function WatchList({
       }
     }
 
+    async function getGainers() {
+      try {
+        const res = await getTopGainers(tokens.access);
+        console.log('gainers', res);
+        setGainers(res.data)
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     getFG();
     getTrending();
+    getGainers();
   }, [tokens.access]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -122,12 +138,22 @@ function WatchList({
               </h3>
               {fgIndex !== null && <FearGreedSemicircle fgIndex={fgIndex} />}
             </div>
+
             <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-75 h-45">
               <h3 className="font-semibold text-lg text-center text-white dark:text-white">
                 Trending Coins
               </h3>
               {trendingCoins !== null && (
                 <TrendingCoinsChart trendingCoins={trendingCoins} />
+              )}
+            </div>
+
+            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-75 h-45">
+              <h3 className="font-semibold text-lg text-center text-white dark:text-white">
+                Top Gainers
+              </h3>
+              {trendingCoins !== null && (
+                <TopGainersChart gainers={gainers} />
               )}
             </div>
           </div>

@@ -147,3 +147,21 @@ export const getTrendingSearches = async (token: string | null) => {
     };
   }
 };
+
+export const getTopGainers = async (token: string | null) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/coins/gainers`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { success: true, data: res.data };
+  } catch (err) {
+    console.log('Failed to fetch top gainers.', err);
+    return {
+      success: false,
+      error:
+        err instanceof Error ? err.message : 'Unable to fetch top gainers.',
+    };
+  }
+};
