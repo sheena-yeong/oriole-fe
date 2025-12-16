@@ -2,10 +2,13 @@ import empty_nest from '../assets/empty_nest.png';
 import AddCoinDialog from '../components/WatchList/AddCoinDialog.tsx';
 import CoinDetailsDialog from '../components/WatchList/CoinDetailsDialog';
 import FearGreedSemicircle from '../components/WatchList/FearGreedSemicircle';
+import TrendingCoinsChart from '../components/WatchList/TrendingCoinsChart.tsx';
 import type { Coin } from '../types/coins';
+import type { TrendingCoinItem } from '../types/watchlistData.ts';
 import { MdDelete } from 'react-icons/md';
 import { useAuth } from '../hooks/useAuth';
 import { getFearGreedLatest } from '../services/crypto';
+import { getTrendingSearches } from '../services/crypto';
 import { useState, useEffect } from 'react';
 import { deleteWatchListCoins } from '../services/crypto.ts';
 
@@ -24,6 +27,9 @@ function WatchList({
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [fgIndex, setFgIndex] = useState<number | null>(null);
+  const [trendingCoins, setTrendingCoins] = useState<TrendingCoinItem[] | null>(
+    null
+  );
   const [error, setError] = useState<string>('');
   const hasCoins = watchListCoins && watchListCoins.length > 0;
   const { tokens } = useAuth();
@@ -51,7 +57,19 @@ function WatchList({
         console.error(err);
       }
     }
+
+    async function getTrending() {
+      try {
+        const res = await getTrendingSearches(tokens.access);
+        const coinsArray = res.data.coins.map(({ item }) => item);
+        setTrendingCoins(coinsArray);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     getFG();
+    getTrending();
   }, [tokens.access]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -97,11 +115,21 @@ function WatchList({
               {error}
             </div>
           )}
-          <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-64 m-6">
-            <h3 className="font-semibold text-lg text-center text-white dark:text-white">
-              Fear and Greed Index
-            </h3>
-            {fgIndex !== null && <FearGreedSemicircle fgIndex={fgIndex} />}
+          <div className="flex gap-5 m-6">
+            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-64 h-45">
+              <h3 className="font-semibold text-lg text-center text-white dark:text-white">
+                Fear and Greed Index
+              </h3>
+              {fgIndex !== null && <FearGreedSemicircle fgIndex={fgIndex} />}
+            </div>
+            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-75 h-45">
+              <h3 className="font-semibold text-lg text-center text-white dark:text-white">
+                Trending Coins
+              </h3>
+              {trendingCoins !== null && (
+                <TrendingCoinsChart trendingCoins={trendingCoins} />
+              )}
+            </div>
           </div>
 
           <div className="mx-6 mt-4 overflow-x-auto">

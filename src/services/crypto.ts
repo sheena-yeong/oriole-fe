@@ -81,7 +81,11 @@ export const deleteWatchListCoins = async (
   }
 };
 
-export const getMarketChart = async (token: string | null, coinId: string, days: number = 7) => {
+export const getMarketChart = async (
+  token: string | null,
+  coinId: string,
+  days: number = 7
+) => {
   try {
     const res = await axios.get(`${BASE_URL}/coins/${coinId}/market-chart`, {
       headers: {
@@ -120,6 +124,26 @@ export const getFearGreedLatest = async (token: string | null) => {
         err instanceof Error
           ? err.message
           : 'Unable to fetch fear greed index.',
+    };
+  }
+};
+
+export const getTrendingSearches = async (token: string | null) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/coins/trending`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { success: true, data: res.data };
+  } catch (err) {
+    console.log('Failed to fetch trending searches.', err);
+    return {
+      success: false,
+      error:
+        err instanceof Error
+          ? err.message
+          : 'Unable to fetch trending searches.',
     };
   }
 };
