@@ -10,10 +10,10 @@ function TrendingCoinsChart({ trendingCoins }: TrendingCoinsChartProps) {
   const top3 = trendingCoins.slice(0, 3);
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4 items-center m-1">
       {top3.map((coin) => (
         <div key={coin.id} className="flex flex-col items-center">
-          <img src={coin.thumb} alt={coin.name} className="w-12 h-12" />
+          <img src={coin.thumb} alt={coin.name} className="w-12 h-12 mb-2" />
           <span className="font-semibold">{coin.name}</span>
         </div>
       ))}
