@@ -7,13 +7,11 @@ interface TopGainersChartProps {
 function TopGainersChart({ gainers }: TopGainersChartProps) {
   if (!gainers) return null;
 
-  const top3 = gainers.slice(0, 3);
-
   return (
     <div className="flex gap-6 items-center">
-      {top3.map((coin) => (
-        <div key={coin.id} className="flex flex-col items-center">
-          <img src={coin.image} alt={coin.name} className="w-12 h-12 mb-1" />
+      {gainers.map((coin) => (
+        <div key={coin.id} className="flex flex-col items-center text-center">
+          <img src={coin.image} alt={coin.name} className="w-12 h-12 mb-1 max-w-20 truncate" />
           <span className="font-semibold">{coin.name}</span>
           <span
             className={`text-sm font-medium ${
