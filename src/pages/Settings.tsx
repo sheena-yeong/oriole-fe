@@ -114,6 +114,7 @@ function Settings() {
                     Confirm Password
                   </label>
                   <input
+                    required
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
