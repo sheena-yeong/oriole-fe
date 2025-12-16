@@ -4,6 +4,7 @@ import CoinDetailsDialog from '../components/WatchList/CoinDetailsDialog';
 import FearGreedSemicircle from '../components/WatchList/FearGreedSemicircle';
 import TrendingCoinsChart from '../components/WatchList/TrendingCoinsChart.tsx';
 import TopGainersChart from '../components/WatchList/TopGainersChart.tsx';
+import TopLosersChart from '../components/WatchList/TopLosersChart.tsx';
 import type { Coin } from '../types/coins';
 import type { TrendingCoinItem } from '../types/watchlistData.ts';
 import type { CoinMarket } from '../types/watchlistData.ts';
@@ -12,6 +13,7 @@ import { useAuth } from '../hooks/useAuth';
 import { getFearGreedLatest } from '../services/crypto';
 import { getTrendingSearches } from '../services/crypto';
 import { getTopGainers } from '../services/crypto';
+import { getTopLosers } from '../services/crypto';
 import { useState, useEffect } from 'react';
 import { deleteWatchListCoins } from '../services/crypto.ts';
 
@@ -34,6 +36,7 @@ function WatchList({
     null
   );
   const [gainers, setGainers] = useState<CoinMarket[] | null>(null)
+  const [losers, setLosers] = useState<CoinMarket[] | null>(null)
 
   const [error, setError] = useState<string>('');
   const hasCoins = watchListCoins && watchListCoins.length > 0;
@@ -66,7 +69,7 @@ function WatchList({
     async function getTrending() {
       try {
         const res = await getTrendingSearches(tokens.access);
-        const coinsArray = res.data.coins.map(({ item }) => item);
+        const coinsArray = res.data.coins.map(({ item }: { item: TrendingCoinItem }) => item);
         setTrendingCoins(coinsArray);
       } catch (err) {
         console.error(err);
@@ -83,9 +86,20 @@ function WatchList({
       }
     }
 
+    async function getLosers() {
+      try {
+        const res = await getTopLosers(tokens.access);
+        console.log('losers', res);
+        setLosers(res.data)
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     getFG();
     getTrending();
     getGainers();
+    getLosers();
   }, [tokens.access]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -132,14 +146,14 @@ function WatchList({
             </div>
           )}
           <div className="flex gap-5 m-6">
-            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-64 h-45">
+            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-64 h-50">
               <h3 className="font-semibold text-lg text-center text-white dark:text-white">
                 Fear and Greed Index
               </h3>
               {fgIndex !== null && <FearGreedSemicircle fgIndex={fgIndex} />}
             </div>
 
-            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-75 h-45">
+            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-80 h-50">
               <h3 className="font-semibold text-lg text-center text-white dark:text-white">
                 Trending Coins
               </h3>
@@ -148,12 +162,21 @@ function WatchList({
               )}
             </div>
 
-            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-75 h-45">
+            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-80 h-50">
               <h3 className="font-semibold text-lg text-center text-white dark:text-white">
                 Top Gainers
               </h3>
-              {trendingCoins !== null && (
+              {gainers !== null && (
                 <TopGainersChart gainers={gainers} />
+              )}
+            </div>
+
+            <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-80 h-50">
+              <h3 className="font-semibold text-lg text-center text-white dark:text-white">
+                Top Losers
+              </h3>
+              {losers !== null && (
+                <TopLosersChart losers={losers} />
               )}
             </div>
           </div>
