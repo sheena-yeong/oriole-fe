@@ -36,7 +36,13 @@ function SignInDialog({ openDialog, setOpenDialog }: DialogProps) {
   };
 
   return (
-    <DialogPrimitive.Root open={openDialog} onOpenChange={setOpenDialog}>
+    <DialogPrimitive.Root
+      open={openDialog}
+      onOpenChange={(isOpen) => {
+        setOpenDialog(isOpen);
+        setError('');
+      }}
+    >
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60" />
 
@@ -99,9 +105,7 @@ function SignInDialog({ openDialog, setOpenDialog }: DialogProps) {
 
             <div className="mt-4 flex justify-end gap-2">
               <DialogPrimitive.Close asChild></DialogPrimitive.Close>
-              {error && (
-                <p className="text-red-600">{error}</p>
-              )}
+              {error && <p className="text-red-600">{error}</p>}
               <button
                 type="submit"
                 className="rounded-md bg-[#fe5914] px-4 py-2 text-sm font-medium text-white 
