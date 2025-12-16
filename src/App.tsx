@@ -63,7 +63,7 @@ function App() {
               <NavBar />
             </div>
 
-            <div className="absolute right-2">
+            <div className="absolute right-5">
               <SettingsDropDown />
             </div>
           </header>
