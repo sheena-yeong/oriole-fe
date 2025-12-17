@@ -50,7 +50,7 @@ function App() {
   }, [fetchCoins, fetchWatchListCoins]);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full min-h-screen bg-black">
       {/* Signed In */}
       {!publicPage && (
         <>
@@ -71,7 +71,11 @@ function App() {
       )}
 
       {/* Public Page */}
-      {publicPage && <PublicPage />}
+      {publicPage && (
+        <div className="h-screen overflow-hidden">
+          <PublicPage />
+        </div>
+      )}
 
       {/* Routes */}
       <main className="relative z-20 h-full w-full">
@@ -79,7 +83,13 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route
               path="/cryptocurrencies"
-              element={<Cryptocurrencies coins={coins} />}
+              element={
+                <Cryptocurrencies
+                  coins={coins}
+                  fetchWatchListCoins={fetchWatchListCoins}
+                  watchListCoins={watchListCoins}
+                />
+              }
             />
             <Route
               path="/watchlist"

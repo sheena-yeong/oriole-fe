@@ -2,17 +2,21 @@ import type { Coin } from '../types/coins';
 import { useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import CoinDescriptionDialog from '../components/Cryptocurrencies/CoinDescriptionDialog';
+import * as Toast from '@radix-ui/react-toast';
 
 interface CryptocurrenciesProps {
   coins: Coin[];
   watchListCoins: Coin[];
+  fetchWatchListCoins: () => void;
 }
 
-function Cryptocurrencies({ coins, watchListCoins }: CryptocurrenciesProps) {
+function Cryptocurrencies({ coins, watchListCoins, fetchWatchListCoins }: CryptocurrenciesProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [query, setQuery] = useState('');
   const [selectedCoin, setSelectedCoin] = useState<Coin | null>(null);
+    const [toastMessage, setToastMessage] = useState('');
+  const [openAlert, setOpenAlert] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -247,9 +251,34 @@ function Cryptocurrencies({ coins, watchListCoins }: CryptocurrenciesProps) {
         <CoinDescriptionDialog
           selectedCoin={selectedCoin}
           watchListCoins={watchListCoins}
-          onClose={() => setSelectedCoin(null)}
+          onClose={() => {setSelectedCoin(null); fetchWatchListCoins()}}
+          setToastMessage={setToastMessage}
+          setOpenAlert={setOpenAlert}
         />
       )}
+
+      <Toast.Provider>
+        <Toast.Root
+          open={openAlert}
+          duration={7000}
+          className="bg-neutral-600 p-4 rounded-md shadow-lg"
+          onOpenChange={(open) => setOpenAlert(open)}
+        >
+          <Toast.Description className="text-white font-semibold">
+            {toastMessage}
+          </Toast.Description>
+          <Toast.Close asChild>
+            <button
+              aria-label="Close"
+              className="absolute top-4 right-4 text-white/70 hover:text-white"
+            >
+              ✕
+            </button>
+          </Toast.Close>
+        </Toast.Root>
+
+        <Toast.Viewport className="fixed bottom-4 right-4 z-99 flex flex-col gap-2 w-96 max-w-[90vw]" />
+      </Toast.Provider>
     </>
   );
 }
