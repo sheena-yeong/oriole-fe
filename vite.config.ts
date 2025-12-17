@@ -5,4 +5,11 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: {
+    port: 5173,
+    cors: {
+      origin: ['http://localhost:5173', 'https://oriole.up.railway.app']
+    }
+  },
+  base: './',
 })
