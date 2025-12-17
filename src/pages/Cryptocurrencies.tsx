@@ -5,9 +5,10 @@ import CoinDescriptionDialog from '../components/Cryptocurrencies/CoinDescriptio
 
 interface CryptocurrenciesProps {
   coins: Coin[];
+  watchListCoins: Coin[];
 }
 
-function Cryptocurrencies({ coins }: CryptocurrenciesProps) {
+function Cryptocurrencies({ coins, watchListCoins }: CryptocurrenciesProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [query, setQuery] = useState('');
@@ -245,6 +246,7 @@ function Cryptocurrencies({ coins }: CryptocurrenciesProps) {
       {selectedCoin && (
         <CoinDescriptionDialog
           selectedCoin={selectedCoin}
+          watchListCoins={watchListCoins}
           onClose={() => setSelectedCoin(null)}
         />
       )}

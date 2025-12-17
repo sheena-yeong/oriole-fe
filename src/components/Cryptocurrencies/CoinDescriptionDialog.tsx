@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import type { Coin } from '../../types/coins.ts';
 import { useAuth } from '../../hooks/useAuth';
 import { getCoinDescription } from '../../services/crypto';
+import { addWatchListCoins } from '../../services/crypto';
 
 interface CoinDescriptionDialogProps {
   selectedCoin: Coin | null;
   onClose: () => void;
+  watchListCoins: Coin[];
 }
 
 type CoinMeta = {
@@ -19,12 +21,23 @@ type CoinMeta = {
 function CoinDescriptionDialog({
   selectedCoin,
   onClose,
+  watchListCoins,
 }: CoinDescriptionDialogProps) {
   const open = !!selectedCoin;
 
   const [data, setData] = useState<CoinMeta | null>(null);
-
   const { tokens } = useAuth();
+  const existingIds = new Set(watchListCoins.map((coin) => coin.id));
+
+  async function handleSubmit(): Promise<void> {
+    if (!selectedCoin) {
+      return;
+    }
+
+    await addWatchListCoins(tokens.access, [
+      { id: selectedCoin.id },
+    ]);
+  }
 
   useEffect(() => {
     async function load() {
@@ -119,8 +132,17 @@ function CoinDescriptionDialog({
               : 'No description available.'}
           </div>
 
-          <button className="mt-6 shadow-lg bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-2 rounded-3xl">
-            Add {selectedCoin.name} to Watch List
+          <button
+            onClick={handleSubmit}
+            className={`mt-6 shadow-lg bg-[#fe5914] hover:bg-[#ff6b2a] text-white font-semibold px-4 py-2 rounded-3xl ${
+              existingIds.has(selectedCoin.id)
+                ? 'opacity-50 cursor-not-allowed'
+                : ''
+            }`}
+          >
+            {existingIds.has(selectedCoin.id)
+              ? 'Coin already in Watch List'
+              : `Add ${selectedCoin.name} to Watch List`}
           </button>
         </DialogPrimitive.Content>
       </DialogPrimitive.Portal>
