@@ -103,7 +103,7 @@ function Nest() {
                         className="w-8 h-8"
                       />
                       <div className="flex flex-col">
-                        <span className="font-medium">
+                        <span className="font-medium text-gray-400">
                           {item.marketData.name}
                         </span>
                         <span className="text-sm text-gray-400 uppercase">
