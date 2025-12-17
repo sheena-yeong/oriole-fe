@@ -1,6 +1,7 @@
 import type { Coin } from '../types/coins';
 import { useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
+import CoinDescriptionDialog from '../components/Cryptocurrencies/CoinDescriptionDialog';
 
 interface CryptocurrenciesProps {
   coins: Coin[];
@@ -10,6 +11,7 @@ function Cryptocurrencies({ coins }: CryptocurrenciesProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [query, setQuery] = useState('');
+  const [selectedCoin, setSelectedCoin] = useState<Coin | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -114,7 +116,12 @@ function Cryptocurrencies({ coins }: CryptocurrenciesProps) {
                           alt={coin.name}
                           className="w-8 h-8 rounded-full"
                         />
-                        <span className="font-medium">{coin.name}</span>
+                        <button
+                          className="hover:underline hover:cursor-pointer font-medium"
+                          onClick={() => setSelectedCoin(coin)}
+                        >
+                          {coin.name}
+                        </button>
                       </div>
                     </td>
                     <td className="px-4 py-3 uppercase text-neutral-400">
@@ -234,6 +241,13 @@ function Cryptocurrencies({ coins }: CryptocurrenciesProps) {
           </div>
         )}
       </div>
+
+      {selectedCoin && (
+        <CoinDescriptionDialog
+          selectedCoin={selectedCoin}
+          onClose={() => setSelectedCoin(null)}
+        />
+      )}
     </>
   );
 }

@@ -178,8 +178,30 @@ export const getTopLosers = async (token: string | null) => {
     console.log('Failed to fetch top losers.', err);
     return {
       success: false,
+      error: err instanceof Error ? err.message : 'Unable to fetch top losers.',
+    };
+  }
+};
+
+export const getCoinDescription = async (
+  token: string | null,
+  coinId: string
+) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/coins/description/${coinId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { success: true, data: res.data };
+  } catch (err) {
+    console.log('Failed to fetch coin description.', err);
+    return {
+      success: false,
       error:
-        err instanceof Error ? err.message : 'Unable to fetch top losers.',
+        err instanceof Error
+          ? err.message
+          : 'Unable to fetch coin description.',
     };
   }
 };
