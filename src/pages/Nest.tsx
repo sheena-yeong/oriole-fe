@@ -71,12 +71,12 @@ function Nest() {
         <table className="min-w-[400px] w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-white">
-              <th className="pb-2 text-left">Asset</th>
-              <th className="pb-2 text-left">Holdings</th>
-              <th className="pb-2 text-left">Avg Buy</th>
-              <th className="pb-2 text-left">Price</th>
-              <th className="pb-2 text-left">Value</th>
-              <th className="pb-2 text-left">P/L</th>
+              <th className="pb-2 text-left text-white">Asset</th>
+              <th className="pb-2 text-left text-white">Holdings</th>
+              <th className="pb-2 text-left text-white">Avg Buy</th>
+              <th className="pb-2 text-left text-white">Price</th>
+              <th className="pb-2 text-left text-white">Value</th>
+              <th className="pb-2 text-left text-white">P/L</th>
             </tr>
           </thead>
           <tbody>
@@ -113,10 +113,10 @@ function Nest() {
                     </div>
                   </td>
 
-                  <td className="py-3 text-left">{quantity.toFixed(4)}</td>
-                  <td className="py-3 text-left">${avgBuy.toFixed(2)}</td>
-                  <td className="py-3 text-left">${price.toFixed(2)}</td>
-                  <td className="py-3 text-left font-medium">
+                  <td className="py-3 text-left text-neutral-400">{quantity.toFixed(4)}</td>
+                  <td className="py-3 text-left text-neutral-400">${avgBuy.toFixed(2)}</td>
+                  <td className="py-3 text-left text-neutral-400">${price.toFixed(2)}</td>
+                  <td className="py-3 text-left text-neutral-400 font-medium">
                     ${value.toFixed(2)}
                   </td>
                   <td

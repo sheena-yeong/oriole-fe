@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import ProtectedRoute from './Routes/ProtectedRoute.tsx';
+import ProtectedRoute from './routes/ProtectedRoute.tsx';
 import PublicPage from './pages/PublicPage.tsx';
 import WatchList from './pages/WatchList.tsx';
 import Settings from './pages/Settings.tsx';
