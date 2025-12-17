@@ -67,7 +67,7 @@ function Nest() {
         Portfolio
       </h3>
 
-      <div className="overflow-x-auto m-6">
+      {portfolioData.length > 0 ? <div className="overflow-x-auto m-6">
         <table className="min-w-[400px] w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-white">
@@ -132,7 +132,7 @@ function Nest() {
             })}
           </tbody>
         </table>
-      </div>
+      </div>: <p className="mt-5 ml-6 text-white">No assets to show.</p>}
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
