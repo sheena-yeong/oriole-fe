@@ -51,8 +51,8 @@ function Settings() {
 
   return (
     <Toast.Provider>
-      <h3 className="p-3 text-3xl font-semibold mt-4 ml-2">Settings</h3>
-      <h3 className="p-3 text-2xl font-semibold mt-4 ml-2">Change Password</h3>
+      <h3 className="p-3 text-3xl font-semibold mt-4 ml-2 text-white">Settings</h3>
+      <h3 className="p-3 text-2xl font-semibold mt-4 ml-2 text-white">Change Password</h3>
       <p className="p-3 text-white ml-2">Change your account password</p>
 
       <div className="p-3 ml-2">
@@ -124,7 +124,7 @@ function Settings() {
 
                 <div className="flex justify-end gap-3">
                   <Dialog.Close asChild>
-                    <button className="px-4 py-2 rounded-md text-sm font-semibold bg-black hover:bg-neutral-600">
+                    <button className="px-4 py-2 rounded-md text-sm font-semibold bg-black hover:bg-neutral-600 text-white">
                       Cancel
                     </button>
                   </Dialog.Close>
