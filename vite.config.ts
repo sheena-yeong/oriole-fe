@@ -11,5 +11,4 @@ export default defineConfig({
       origin: ['http://localhost:5173', 'https://oriole.up.railway.app']
     }
   },
-  base: './',
 })
