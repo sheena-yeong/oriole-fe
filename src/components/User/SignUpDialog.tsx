@@ -56,13 +56,13 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
         <DialogPrimitive.Content
           className="
             fixed left-1/2 top-1/2 w-[90%] max-w-sm -translate-x-1/2 -translate-y-1/2
-            rounded-xl bg-white p-6 shadow-lg dark:bg-neutral-900
+            rounded-xl bg-white p-6 shadow-lg
           "
         >
           <DialogPrimitive.Close asChild>
             <button
               className="
-                absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white
+                absolute top-3 right-3 text-neutral-500 hover:text-black
                 rounded-full p-1
               "
               aria-label="Close"
@@ -75,7 +75,7 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
             Create an Account
           </DialogPrimitive.Title>
 
-          <p className="text-sm text-neutral-600 dark:text-neutral-300 mb-5">
+          <p className="text-sm text-neutral-600 mb-5">
             Sign up to get started.
           </p>
 
@@ -93,7 +93,7 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
                 placeholder="John"
                 required
                 onChange={(e) => setFirstName(e.target.value)}
-                className="rounded-md border border-neutral-300 px-3 py-2 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800"
+                className="rounded-md border border-neutral-300 px-3 py-2 focus:border-neutral-500 focus:outline-none"
               />
             </div>
 
@@ -104,7 +104,7 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
                 placeholder="Doe"
                 required
                 onChange={(e) => setLastName(e.target.value)}
-                className="rounded-md border border-neutral-300 px-3 py-2 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800"
+                className="rounded-md border border-neutral-300 px-3 py-2 focus:border-neutral-500 focus:outline-none"
               />
             </div>
 
@@ -115,7 +115,7 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
                 placeholder="you@example.com"
                 required
                 onChange={(e) => setEmail(e.target.value)}
-                className="rounded-md border border-neutral-300 px-3 py-2 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800"
+                className="rounded-md border border-neutral-300 px-3 py-2 focus:border-neutral-500 focus:outline-none"
               />
             </div>
 
@@ -126,7 +126,7 @@ function SignUpDialog({ openDialog, setOpenDialog }: DialogProps) {
                 placeholder="Enter a password"
                 required
                 onChange={(e) => setPassword(e.target.value)}
-                className="rounded-md border border-neutral-300 px-3 py-2 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800"
+                className="rounded-md border border-neutral-300 px-3 py-2 focus:border-neutral-500 focus:outline-none"
               />
             </div>
 

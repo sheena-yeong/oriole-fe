@@ -29,7 +29,7 @@ function Wallet() {
     <>
       <div className="p-5 overflow-x-hidden sm:overflow-x-auto w-full"></div>
 
-      <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col gap-4 w-70 m-6">
+      <div className="bg-neutral-800  rounded-xl shadow-lg p-6 flex flex-col gap-4 w-70 m-6">
         <h3 className="font-poppins not-[]:font-thin text-xl text-white">
           Your balance (USD)
         </h3>

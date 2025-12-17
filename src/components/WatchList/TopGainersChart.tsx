@@ -12,7 +12,7 @@ function TopGainersChart({ gainers }: TopGainersChartProps) {
       {gainers.map((coin) => (
         <div key={coin.id} className="flex flex-col items-center text-center">
           <img src={coin.image} alt={coin.name} className="w-12 h-12 mb-1 max-w-20 truncate" />
-          <span className="font-semibold">{coin.name}</span>
+          <span className="font-semibold text-neutral-400">{coin.name}</span>
           <span
             className={`text-sm font-medium ${
               (coin.price_change_percentage_24h || 0) >= 0 ? 'text-green-500' : 'text-red-500'

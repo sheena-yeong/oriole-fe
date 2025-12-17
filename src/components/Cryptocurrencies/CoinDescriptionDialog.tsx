@@ -75,10 +75,10 @@ function CoinDescriptionDialog({
         <DialogPrimitive.Portal>
           <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-40" />
 
-          <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-neutral-200 p-6 shadow-lg dark:bg-neutral-900 z-40 max-h-[80vh] flex flex-col">
+          <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-neutral-200 p-6 shadow-lg  z-40 max-h-[80vh] flex flex-col">
             <DialogPrimitive.Close asChild>
               <button
-                className="absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white rounded-full p-1"
+                className="absolute top-3 right-3 text-neutral-500 hover:text-black  rounded-full p-1"
                 aria-label="Close"
               >
                 ✕
@@ -86,7 +86,7 @@ function CoinDescriptionDialog({
             </DialogPrimitive.Close>
 
             {/* Header */}
-            <DialogPrimitive.Title className="flex gap-3 text-2xl font-bold text-black dark:text-white mb-4">
+            <DialogPrimitive.Title className="flex gap-3 text-2xl font-bold text-black mb-4">
               <img
                 src={selectedCoin.image}
                 alt={selectedCoin.name}
@@ -136,7 +136,7 @@ function CoinDescriptionDialog({
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto rounded-lg bg-neutral-100 dark:bg-neutral-800 p-4 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed max-h-[50vh]">
+            <div className="flex-1 overflow-y-auto rounded-lg bg-neutral-100  p-4 text-sm text-neutral-700  leading-relaxed max-h-[50vh]">
               {data?.description
                 ? data.description.split(/\r?\n/).map((paragraph, idx) => (
                     <p key={idx} className="mb-2">

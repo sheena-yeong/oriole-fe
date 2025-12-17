@@ -14,7 +14,7 @@ function TrendingCoinsChart({ trendingCoins }: TrendingCoinsChartProps) {
       {top3.map((coin) => (
         <div key={coin.id} className="flex flex-col items-center">
           <img src={coin.thumb} alt={coin.name} className="w-12 h-12 mb-2 max-w-20 truncate" />
-          <span className="font-semibold">{coin.name}</span>
+          <span className="font-semibold text-neutral-400">{coin.name}</span>
         </div>
       ))}
     </div>

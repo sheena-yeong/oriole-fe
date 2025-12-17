@@ -127,24 +127,24 @@ function BuyCryptoDialog({
         <DialogPrimitive.Portal>
           <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50" />
 
-          <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-neutral-200 p-6 shadow-lg dark:bg-neutral-900 z-50 max-h-[80vh] flex flex-col overflow-y-auto">
+          <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-neutral-200 p-6 shadow-lg z-50 max-h-[80vh] flex flex-col overflow-y-auto">
             <DialogPrimitive.Close asChild>
               <button
-                className="absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white rounded-full p-1"
+                className="absolute top-3 right-3 text-neutral-500 hover:text-black rounded-full p-1"
                 aria-label="Close"
               >
                 ✕
               </button>
             </DialogPrimitive.Close>
 
-            <DialogPrimitive.Title className="text-2xl font-bold text-black dark:text-white mb-4 justify-center flex">
+            <DialogPrimitive.Title className="text-2xl font-bold text-black mb-4 justify-center flex">
               <button className="absolute left-5" onClick={onBack}>
                 <IoIosArrowRoundBack size={35} />
               </button>
               Buy {selectedCoin?.name}
             </DialogPrimitive.Title>
 
-            <div className="bg-neutral-900/90 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col gap-4 max-w-2xl m-3">
+            <div className="bg-neutral-900/90 rounded-xl shadow-lg p-6 flex flex-col gap-4 max-w-2xl m-3">
 
               <div className="flex justify-between items-center gap-4">
                 <div className="flex items-center gap-2 w-36">

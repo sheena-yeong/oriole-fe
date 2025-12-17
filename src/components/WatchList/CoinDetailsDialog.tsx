@@ -85,17 +85,17 @@ function CoinDetailsDialog({ selectedCoin, onClose }: CoinDetailsDialogProps) {
         <DialogPrimitive.Portal>
           <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50" />
 
-          <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-neutral-200 p-6 shadow-lg dark:bg-neutral-900 z-50 max-h-[80vh] flex flex-col">
+          <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-xl bg-neutral-200 p-6 shadow-lg z-50 max-h-[80vh] flex flex-col">
             <DialogPrimitive.Close asChild>
               <button
-                className="absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white rounded-full p-1"
+                className="absolute top-3 right-3 text-neutral-500 hover:text-black rounded-full p-1"
                 aria-label="Close"
               >
                 ✕
               </button>
             </DialogPrimitive.Close>
 
-            <DialogPrimitive.Title className="flex gap-3 text-2xl font-bold text-black dark:text-white mb-4">
+            <DialogPrimitive.Title className="flex gap-3 text-2xl font-bold text-black mb-4">
               <img
                 src={selectedCoin?.image}
                 alt={selectedCoin?.name}

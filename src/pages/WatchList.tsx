@@ -154,15 +154,15 @@ function WatchList({
   return (
     <>
       <div className="flex gap-5 p-6 ml-6">
-        <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-64 h-50">
-          <h3 className="font-semibold text-lg text-center text-white dark:text-white">
+        <div className="bg-neutral-800 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-64 h-50">
+          <h3 className="font-semibold text-lg text-center text-white ">
             Fear and Greed Index
           </h3>
           {fgIndex !== null && <FearGreedSemicircle fgIndex={fgIndex} />}
         </div>
 
-        <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg py-6 flex flex-col items-center gap-4 w-80 h-50">
-          <h3 className="font-semibold text-lg text-center text-white dark:text-white">
+        <div className="bg-neutral-800 rounded-xl shadow-lg py-6 flex flex-col items-center gap-4 w-80 h-50">
+          <h3 className="font-semibold text-lg text-center text-white ">
             Trending Coins
           </h3>
           {trendingCoins !== null && (
@@ -170,15 +170,15 @@ function WatchList({
           )}
         </div>
 
-        <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-80 h-50">
-          <h3 className="font-semibold text-lg text-center text-white dark:text-white">
+        <div className="bg-neutral-800 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-80 h-50">
+          <h3 className="font-semibold text-lg text-center text-white">
             Top Gainers
           </h3>
           {gainers !== null && <TopGainersChart gainers={gainers} />}
         </div>
 
-        <div className="bg-neutral-800 dark:bg-neutral-900 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-80 h-50">
-          <h3 className="font-semibold text-lg text-center text-white dark:text-white">
+        <div className="bg-neutral-800 rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-80 h-50">
+          <h3 className="font-semibold text-lg text-center text-white">
             Top Losers
           </h3>
           {losers !== null && <TopLosersChart losers={losers} />}

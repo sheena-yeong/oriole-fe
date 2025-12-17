@@ -63,14 +63,14 @@ function WalletDialog({ open, onClose }: WalletDialogProps) {
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className="fixed inset-0 bg-black/60 z-50" />
 
-        <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-neutral-200 p-6 shadow-lg dark:bg-neutral-900 z-50">
+        <DialogPrimitive.Content className="fixed left-1/2 top-1/2 w-[90%] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl bg-neutral-200 p-6 shadow-lg z-50">
           <DialogPrimitive.Close asChild>
-            <button className="absolute top-3 right-3 text-neutral-500 hover:text-black dark:hover:text-white">
+            <button className="absolute top-3 right-3 text-neutral-500 hover:text-black">
               ✕
             </button>
           </DialogPrimitive.Close>
 
-          <DialogPrimitive.Title className="text-xl font-bold text-center text-black dark:text-white mb-5">
+          <DialogPrimitive.Title className="text-xl font-bold text-center text-black mb-5">
             {step === 'input' ? 'Top Up Wallet' : 'Complete Payment'}
           </DialogPrimitive.Title>
 
