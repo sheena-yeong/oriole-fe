@@ -1,73 +1,48 @@
-# React + TypeScript + Vite
+<p align="center">
+  <img src="./src/assets/oriole_readme_banner.png" alt="banner" width="100%" />
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p>Live URL: <a href="https://oriole.up.railway.app/">https://oriole.up.railway.app/</a></p>
 
-Currently, two official plugins are available:
+## Oriole
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Armed with a personal goal of understanding how technology integrates with finance, I tasked myself with building a minimally functioning cryptocurrency application. This app allows you to browse the top 250 cryptocurrencies, learn more about their history, add them to a watchlist to monitor their performance, top up your wallet, and use the balance to purchase cryptocurrencies that interest you. Note that this app assumes zero transaction fees for simplicity.
 
-## React Compiler
+## Attributions
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [Homepage Background](https://unsplash.com/photos/black-and-white-road-during-night-time-wNsHBf_bTBo)
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend Framework:** React + Vite
+- **Backend Framework:** Node.js
+- **Language:** TypeScript
+- **Payment Service:** Stripe
+- **Styling:** Tailwind CSS, Radix UI Library, Recharts, React Icons
+- **Database:** PostgreSQL + Sequelize
+- **Caching:** Redis
+- **HTTP Request Library:** Axios
+- **Crypto Data APIs:** CoinyBubble (Fear & Greed Index), CoinGecko (Market Data)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## A Peek into Oriole
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Browse the top 250 cryptocurrencies** and read about their history or visit the project's homepage to learn more, with the option to add coins to your watchlist for easy monitoring.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+<img width="1024" src="./src/assets/readme/ethereumDescription.png" />
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Interested in a coin?** Add it to your watchlist to keep track of its performance.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+<img width="1024" src="./src/assets/readme/addCoins.png" />
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Monitor market trends** for cryptocurrencies on your watchlist with interactive charts spanning different time periods.
+
+<img width="1024" src="./src/assets/readme/bitcoinGraph.png" />
+
+**Top up your wallet balance** to have funds ready for purchasing cryptocurrencies and track your portfolio growth over time.
+
+<img width="1024" src="./src/assets/readme/topup.png" />
+
+## Next Steps
+
+- Revise the user journey for cryptocurrency purchases to better align with real-world trading practices
+- Implement transaction fees to simulate realistic trading conditions
