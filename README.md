@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./src/assets/oriole_readme_banner.png" alt="banner" width="100%" />
+  <img src="./src/assets/readme/oriole_readme_banner.png" alt="banner" width="100%" />
 </p>
 
 <p>Live URL: <a href="https://oriole.up.railway.app/">https://oriole.up.railway.app/</a></p>
