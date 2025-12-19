@@ -8,10 +8,6 @@
 
 Armed with a personal goal of understanding how technology integrates with finance, I tasked myself with building a minimally functioning cryptocurrency application. This app allows you to browse the top 250 cryptocurrencies, learn more about their history, add them to a watchlist to monitor their performance, top up your wallet, and use the balance to purchase cryptocurrencies that interest you. Note that this app assumes zero transaction fees for simplicity.
 
-## Attributions
-
-- [Homepage Background](https://unsplash.com/photos/black-and-white-road-during-night-time-wNsHBf_bTBo)
-
 ## Technologies Used
 
 - **Frontend Framework:** React + Vite
@@ -34,6 +30,10 @@ Armed with a personal goal of understanding how technology integrates with finan
 
 <img width="1024" src="./src/assets/readme/addCoins.png" />
 
+**Keep tabs on important data such as ** the Fear & Greed Index, top gainers, top losers, and trending searches.
+
+<img width="1024" src="../src/assets/readme/watchlist.png" />
+
 **Monitor market trends** for cryptocurrencies on your watchlist with interactive charts spanning different time periods.
 
 <img width="1024" src="./src/assets/readme/bitcoinGraph.png" />
@@ -41,6 +41,10 @@ Armed with a personal goal of understanding how technology integrates with finan
 **Top up your wallet balance** to have funds ready for purchasing cryptocurrencies and track your portfolio growth over time.
 
 <img width="1024" src="./src/assets/readme/topup.png" />
+
+## Attributions
+
+- [Homepage Background](https://unsplash.com/photos/black-and-white-road-during-night-time-wNsHBf_bTBo)
 
 ## Next Steps
 
