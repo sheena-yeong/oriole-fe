@@ -32,7 +32,7 @@ Armed with a personal goal of understanding how technology integrates with finan
 
 **Keep tabs on important data** such as the Fear & Greed Index, top gainers, top losers, and trending searches.
 
-<img width="1024" src="../src/assets/readme/watchlist.png" />
+<img width="1024" src="./src/assets/readme/watchlist.png" />
 
 **Monitor market trends** for cryptocurrencies on your watchlist with interactive charts spanning different time periods.
 
